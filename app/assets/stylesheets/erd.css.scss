@@ -1,0 +1,126 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body div {
+	text-align: left;
+	margin: 0 auto;
+}
+
+li {
+  list-style-type: none;
+}
+
+
+label, input { display:block; }
+input.text { margin-bottom:0px; width:95%; padding: 0; }
+fieldset { padding:0; border:0; margin-top:25px; }
+.ui-button { outline: 0; margin:0; padding: .4em 1em .5em; text-decoration:none; cursor:pointer; position: relative; text-align: center; }
+.ui-dialog .ui-state-highlight, .ui-dialog .ui-state-error { padding: 0; }
+
+.ui-widget-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+#erd_container {
+  width: 60%;
+	float: left;
+}
+
+#migration {
+	float: right;
+}
+
+#erd {
+  position: absolute;
+
+  form {
+    * {
+      float: left;
+    }
+    display: none;
+  }
+
+  div.model {
+    position: absolute;
+    border: 1px #000 solid;
+    cursor: move;
+
+    a.close {
+      position:absolute; top:-1px; right:-1px; z-index:5; vertical-align:middle; line-height: 0.5; font-family:Arial, sans-serif; text-decoration:none; font-weight:normal; background-color:#c22; border:2px solid #999; color:#555; display:block; width:10px; height:10px; text-align:center; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; -moz-box-shadow: 0 0 1px 1px #666;-webkit-box-shadow: 0 0 1px 1px #666;box-shadow: 0 0 1px 1px #666;
+    }
+    div.add_column_box {
+      text-align: center;
+      margin: 0 5px 0 5px;
+
+      a.add_column {
+        font-size: small;
+      }
+    }
+
+    div.model_name {
+      border-bottom: 1px #000 solid;
+      cursor: pointer;
+      margin: 1px 5px 0 5px auto;
+      div.model_name_text {
+        text-align: center;
+      }
+    }
+    div.model_name > div.model_name_text:hover {
+      text-decoration: underline;
+    }
+
+    form.rename_model_form, form.rename_column_form, form.alter_column_form {
+      width: 150px;
+      input[name=to] {
+        width: 65%;
+      }
+      input[type=submit] {
+        width: 25%;
+      }
+    }
+    form.add_column_form {
+      width: 150px;
+      input[name=name] {
+        width: 38%;
+      }
+      input[name=type] {
+        width: 27%;
+      }
+      input[type=submit] {
+        width: 25%;
+      }
+    }
+    div.columns {
+      margin: 0 5px 0 3px;
+
+      ul > li.column {
+        span.column_name_text, span.column_type_text {
+          cursor: pointer;
+        }
+        span.column_type_text {
+          font-size: small;
+        }
+        span.column_name_text:hover, span.column_type_text:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  div.model:hover {
+    background-color: #cfc
+  }
+}
+
+
+#changes {
+  display: none;
+}
+
+#model_name_changes, #column_name_changes {
+  display: none;
+}
+
+table, th, td {
+  border: 1px #000 solid;
+  border-collapse: collapse;
+}

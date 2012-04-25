@@ -1,0 +1,16 @@
+<div>
+  <div id="erd_container">
+    <%=raw @erd %>
+  </div>
+
+  <div id="migration">
+    <table id="changes">
+      <thead><tr><th>action</th><th>model</th><th>column</th><th>from</th><th>to</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <%= form_tag erd_path, :method => :put, :id => 'changes_form' do %>
+      <%= hidden_field_tag 'changes' %>
+      <%= submit_tag 'save changes' %>
+    <% end %>
+  </div>
+</div>

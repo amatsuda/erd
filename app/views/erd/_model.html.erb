@@ -1,0 +1,16 @@
+<div id="<%= model[:name] %>" class="model" style="top: <%= model[:y] %>px; left: <%= model[:x] %>px;" data-model_name="<%= model[:model] %>">
+  <a href="#!" class="close"> x </a>
+  <div class="model_name">
+    <div class="model_name_text"><%= model[:model] %></div>
+    <form class="rename_model_form"><span><input name="model" type="hidden" value="<%= model[:model] %>" /><input name="to" type="text" /><input type="submit" value="Change" /></span></form>
+  </div>
+  <div class="columns">
+    <ul>
+      <%= render :partial => 'erd/column', :collection => model[:columns], :locals => {:model => model} -%>
+    </ul>
+  </div>
+  <div class="add_column_box">
+    <a href="#!" class="add_column">add column</a>
+    <form class="add_column_form"><span><input name="model" type="hidden" value="<%= model[:model] %>" /><input name="name" type="text" /><span>:</span><input name="type" type="text" value="string" /><input type="submit" value="Add" /></span></form>
+  </div>
+</div>
