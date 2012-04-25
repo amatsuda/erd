@@ -1,5 +1,2 @@
-require "erd/version"
-
-module Erd
-  # Your code goes here...
-end
+require 'erd/version'
+require 'erd/railtie'
