@@ -14,4 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "erd"
   gem.require_paths = ["lib"]
   gem.version       = Erd::VERSION
+
+  gem.add_runtime_dependency 'rails-erd', ['>= 0.4.5']
+  gem.add_runtime_dependency 'nokogiri'
 end
