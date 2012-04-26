@@ -1,0 +1,72 @@
+= Erd
+
+A Rails engine for drawing your app's ER diagram
+
+
+== Requirements
+
+* Rails 3.2 or 3.1
+
+* Graphviz
+
+
+== Installation
+
+Add 'erd' gem to your existing app's Gemfile:
+  gem 'erd'
+
+Bundle it:
+  % bundle
+
+
+== Usage
+
+Browse at your http://localhost:3000/erd
+
+
+== Features
+
+* Erd draws an ER diagram based on your app's database and models
+
+* You can drag and arrange the positions of each model
+
+* You can add column
+
+* You can rename column
+
+* You can alter column type
+
+* You can drop table
+
+* Finally, Erd generates migration files on the server (you need to run `rake db:migrate` by hand)
+
+
+== TODO
+
+* Better design
+
+* Better UI
+
+* Fix buggy JS
+
+* create table (we need to generate AR model file at the same time)
+
+* drop column (need to think of the UI)
+
+* performance (with large number of models)
+
+* stop depending on rails-erd and Graphviz
+
+* tests
+
+* cleaner code (the code is horrible. Please don't read the code, though of course your patches welcome)
+
+
+== Contributing to Erd
+
+* Send me your pull requests!
+
+
+== Copyright
+
+Copyright (c) 2012 Akira Matsuda. See MIT-LICENSE for further details.
