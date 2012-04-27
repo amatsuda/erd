@@ -14,6 +14,16 @@
         </ul>
       </div>
     <%- end -%>
+    <%- if flash[:failed_migrations].present? -%>
+      <div id="generated">
+        failed migrations
+        <ul>
+        <%- flash[:failed_migrations].each do |m| -%>
+          <li><%= m %></li>
+        <%- end -%>
+        </ul>
+      </div>
+    <%- end -%>
     <table id="changes">
       <thead><tr><th>action</th><th>model</th><th>column</th><th>from</th><th>to</th></tr></thead>
       <tbody></tbody>
