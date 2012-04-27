@@ -1,8 +1,4 @@
 <div>
-  <div id="erd_container">
-    <%=raw @erd %>
-  </div>
-
   <div id="migration">
     <%- if flash[:generated_migrations].present? -%>
       <div id="generated">
@@ -33,4 +29,8 @@
       <%= submit_tag 'save changes' %>
     <% end %>
   </div>
+  <div id="erd_container">
+    <%=raw @erd %>
+  </div>
+
 </div>
