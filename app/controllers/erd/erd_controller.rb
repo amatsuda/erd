@@ -19,6 +19,19 @@ module Erd
         {}
       end
       @erd = render_plain plain, positions
+
+      migrated_versions = ActiveRecord::Base.connection.select_values("SELECT version FROM #{ActiveRecord::Migrator.schema_migrations_table_name}").map {|v| '%.3d' % v}
+      @migrations = []
+      ActiveRecord::Migrator.migrations_paths.each do |path|
+        Dir.foreach(path) do |file|
+          if (version_and_name = /^(\d{3,})_(.+)\.rb$/.match(file))
+            status = migrated_versions.delete(version_and_name[1]) ? 'up' : 'down'
+            @migrations << {status: status, version: version_and_name[1], name: version_and_name[2]}
+          end
+        end
+      end
+      @migrations += migrated_versions.map {|v| {status: 'up', version: v, name: '*** NO FILE ***'}}
+      @migrations.sort_by! {|m| m[:version]}
     end
 
     def update
