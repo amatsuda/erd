@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ['ronnie@dio.jp']
   gem.description   = 'erd engine on Rails'
   gem.summary       = 'erd engine on Rails'
-  gem.homepage      = ''
+  gem.homepage      = 'https://github.com/amatsuda/erd'
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
