@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ERD - <%= Rails.application.class.parent.name %></title>
+  <%= stylesheet_link_tag    'erd/application', :media => 'all' %>
+  <%= javascript_include_tag 'erd/application' %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<%= yield %>
+</body>
+</html>

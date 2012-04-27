@@ -1,5 +1,5 @@
 <div id="erd" style="border: 1px solid black; width: <%= width %>pt; height: <%= height %>pt;">
-  <%= render :partial => 'erd/model', :collection => models -%>
+  <%= render :partial => 'erd/erd/model', :collection => models -%>
   <svg width="<%= width %>pt" height="<%= height %>pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   </svg>
   <script>$(function() { window.edges = <%= edges.to_json.html_safe %>; connect_arrows(window.edges)})</script>
