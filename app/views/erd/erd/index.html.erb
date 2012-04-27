@@ -15,7 +15,7 @@
       </div>
     <%- end -%>
     <%- if flash[:failed_migrations].present? -%>
-      <div id="generated">
+      <div id="failed">
         failed migrations
         <ul>
         <%- flash[:failed_migrations].each do |m| -%>
