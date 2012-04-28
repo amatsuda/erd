@@ -1,6 +1,6 @@
 = Erd
 
-A Rails engine for drawing your app's ER diagram
+A Rails engine for drawing your app's ER diagram and operating migrations
 
 
 == Requirements
@@ -30,15 +30,11 @@ Browse at your http://localhost:3000/erd
 
 * You can drag and arrange the positions of each model
 
-* You can add column
+* You can operate DB schema manipulations such as `add column`, `rename column`, `alter column`, and `drop table`
 
-* You can rename column
+* Then, Erd generates migration files on the server
 
-* You can alter column type
-
-* You can drop table
-
-* Finally, Erd generates migration files on the server (you need to run `rake db:migrate` by hand)
+* And you can run each migration on your browser
 
 
 == TODO
