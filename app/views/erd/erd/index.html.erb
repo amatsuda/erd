@@ -4,18 +4,6 @@
   </div>
 
   <div id="migration">
-    <%= form_tag '/erd/migrate', :method => :put do %>
-      <table>
-        <caption>migration status</caption>
-        <thead><tr><th>status</th><th>version</th><th>name</th></tr></thead>
-        <tbody>
-          <%- @migrations.each do |m| -%>
-            <tr><td><%= check_box_tag (m[:status] == 'up' ? 'down[]' : 'up[]'), m[:version] %><%= m[:status] %></td><td><%= m[:version] %></td><td><%= m[:name] %></td></tr>
-          <%- end -%>
-        </tbody>
-      </table>
-    <%= submit_tag 'run migrations' %>
-    <% end %>
     <%- if flash[:failed_migrations].present? -%>
       <div id="failed">
         failed migrations
@@ -33,6 +21,18 @@
     <%= form_tag '/erd', :method => :put, :id => 'changes_form' do %>
       <%= hidden_field_tag 'changes' %>
       <%= submit_tag 'save changes' %>
+    <% end %>
+    <%= form_tag '/erd/migrate', :method => :put do %>
+      <table>
+        <caption>migration status</caption>
+        <thead><tr><th>status</th><th>version</th><th>name</th></tr></thead>
+        <tbody>
+          <%- @migrations.each do |m| -%>
+            <tr><td><%= check_box_tag (m[:status] == 'up' ? 'down[]' : 'up[]'), m[:version] %><%= m[:status] %></td><td><%= m[:version] %></td><td><%= m[:name] %></td></tr>
+          <%- end -%>
+        </tbody>
+      </table>
+    <%= submit_tag 'run migrations' %>
     <% end %>
   </div>
 </div>
