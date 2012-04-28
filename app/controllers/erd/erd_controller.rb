@@ -86,6 +86,11 @@ module Erd
       redirect_to erd.root_path, :flash => {:generated_migrations => generated_migrations, :failed_migrations => failed_migrations}
     end
 
+    def migrate
+      run_migrations :up => params[:up], :down => params[:down]
+      redirect_to erd.root_path
+    end
+
     private
     def render_plain(plain, positions)
       _scale, svg_width, svg_height = plain.scan(/\Agraph ([0-9\.]+) ([0-9\.]+) ([0-9\.]+)$/).first
@@ -116,10 +121,14 @@ module Erd
     end
 
     # `rake db:migrate`
-    def migrate
-      ActiveRecord::Migrator.migrate(ActiveRecord::Migrator.migrations_path, ENV["VERSION"] ? ENV["VERSION"].to_i : nil)
+    def run_migrations(migrations)
+      migrations.each do |direction, versions|
+        versions.each do |version|
+          ActiveRecord::Migrator.run(direction, ActiveRecord::Migrator.migrations_path, version.to_i)
+        end if versions
+      end
       if ActiveRecord::Base.schema_format == :ruby
-        File.open(ENV['SCHEMA'] || "#{Rails.root}/db/schema.rb", "w") do |file|
+        File.open(ENV['SCHEMA'] || "#{Rails.root}/db/schema.rb", 'w') do |file|
           ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection, file)
         end
       end
