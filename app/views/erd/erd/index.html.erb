@@ -16,16 +16,6 @@
       </table>
     <%= submit_tag 'run migrations' %>
     <% end %>
-    <%- if flash[:generated_migrations].present? -%>
-      <div id="generated">
-        generated migrations (please run rake db:migrate)
-        <ul>
-        <%- flash[:generated_migrations].each do |m| -%>
-          <li><%= m %></li>
-        <%- end -%>
-        </ul>
-      </div>
-    <%- end -%>
     <%- if flash[:failed_migrations].present? -%>
       <div id="failed">
         failed migrations

@@ -36,7 +36,7 @@ module Erd
 
     def update
       changes = ActiveSupport::JSON.decode(params[:changes])
-      generated_migrations, failed_migrations = [], []
+      failed_migrations = []
       changes.each do |row|
         begin
           action, model, column, from, to = row['action'], row['model'].tableize, row['column'], row['from'], row['to']
@@ -46,35 +46,29 @@ module Erd
             execute_generate_migration "drop_#{model}"
             generated_migration_file = (Dir.glob(Rails.root.join('db', 'migrate', '*.rb')) - before_migration_files).first
             gsub_file generated_migration_file, /def up.*  end/m, "def change\n    drop_table :#{model}\n  end"
-            generated_migrations << File.basename(generated_migration_file)
           when 'rename_model'
             from, to = from.tableize, to.tableize
             execute_generate_migration "rename_#{from}_to_#{to}"
             generated_migration_file = (Dir.glob(Rails.root.join('db', 'migrate', '*.rb')) - before_migration_files).first
             gsub_file generated_migration_file, /def up.*  end/m, "def change\n    rename_table :#{from}, :#{to}\n  end"
-            generated_migrations << File.basename(generated_migration_file)
           when 'add_column'
             name_and_type = column.scan(/(.*)\((.*?)\)/).first
             name, type = name_and_type[0], name_and_type[1]
             execute_generate_migration "add_#{name}_to_#{model}", ["#{name}:#{type}"]
             generated_migration_file = (Dir.glob(Rails.root.join('db', 'migrate', '*.rb')) - before_migration_files).first
-            generated_migrations << File.basename(generated_migration_file)
           when 'rename_column'
             execute_generate_migration "rename_#{model}_#{from}_to_#{to}"
             generated_migration_file = (Dir.glob(Rails.root.join('db', 'migrate', '*.rb')) - before_migration_files).first
             gsub_file generated_migration_file, /def up.*  end/m, "def change\n    rename_column :#{model}, :#{from}, :#{to}\n  end"
-            generated_migrations << File.basename(generated_migration_file)
           when 'alter_column'
             execute_generate_migration "change_#{model}_#{column}_type_to_#{to}"
             generated_migration_file = (Dir.glob(Rails.root.join('db', 'migrate', '*.rb')) - before_migration_files).first
             gsub_file generated_migration_file, /def up.*  end/m, "def change\n    change_column :#{model}, :#{column}, :#{to}\n  end"
-            generated_migrations << File.basename(generated_migration_file)
           when 'move'
             json_file = Rails.root.join('tmp', 'erd_positions.json')
             positions = json_file.exist? ? ActiveSupport::JSON.decode(json_file.read) : {}
             positions[model] = to
             json_file.open('w') {|f| f.write positions.to_json}
-            generated_migrations << 'saved entity positions'
           else
             raise "unexpected action: #{action}"
           end
@@ -83,7 +77,7 @@ module Erd
         end
       end
 
-      redirect_to erd.root_path, :flash => {:generated_migrations => generated_migrations, :failed_migrations => failed_migrations}
+      redirect_to erd.root_path, :flash => {:failed_migrations => failed_migrations}
     end
 
     def migrate

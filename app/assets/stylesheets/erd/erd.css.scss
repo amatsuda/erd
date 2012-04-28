@@ -113,8 +113,9 @@ fieldset { padding:0; border:0; margin-top:25px; }
 }
 
 
-#generated, #failed {
-  border: 1px #000 solid;
+#failed {
+  border: 2px #f00 solid;
+  padding: 2px;
 }
 
 #changes {
