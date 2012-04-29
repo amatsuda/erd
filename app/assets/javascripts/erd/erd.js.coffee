@@ -4,17 +4,29 @@ $ ->
 #   $('#erd').on 'click', (ev) ->
 #     console.log 'click'
   $('div.model_name_text, span.column_name_text, span.column_type_text').on('click', (ev) ->
+    m = $(this).parents('div.model')
+    if m.hasClass('noclick')
+      m.removeClass('noclick')
+      return false
     $(this).hide()
       .next('form').show().find('input[name=to]').val($(this).text()).focus()
   )
 
   $('div.model a.add_column').on 'click', (ev) ->
     ev.preventDefault()
+    m = $(this).parents('div.model')
+    if m.hasClass('noclick')
+      m.removeClass('noclick')
+      return false
     $(this).hide()
       .next('form').show().find('input[name=type]').val('string').end().find('input[name=name]').val('').focus()
 
   $('div.model a.close').on 'click', (ev) ->
     ev.preventDefault()
+    m = $(this).parents('div.model')
+    if m.hasClass('noclick')
+      m.removeClass('noclick')
+      return false
     if confirm('remove this table?')
       [model_id, model_name] = [$(this).parent().attr('id'), $(this).parent().data('model_name')]
       upsert_change 'remove_model', model_name, '', '', ''
@@ -27,6 +39,7 @@ $ ->
 
   $('div.model').draggable
     drag: (_event, _ui) ->
+      $(this).addClass('noclick')
       model = $(this).data('model_name')
       from = $(this).data('original_position')
       to = [$(this).css('left').replace(/px$/, ''), $(this).css('top').replace(/px$/, '')].join()
