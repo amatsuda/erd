@@ -25,7 +25,7 @@ class ERD
     $('#changes').show()
 
   positions: (div) ->
-    [left, width, top, height] = [parseInt(div.css('left')), parseInt(div.css('width')), parseInt(div.css('top')), parseInt(div.css('height'))]
+    [left, width, top, height] = [parseFloat(div.css('left')), parseFloat(div.css('width')), parseFloat(div.css('top')), parseFloat(div.css('height'))]
     {left: left, right: left + width, top: top, bottom: top + height, center: {x: (left + left + width) / 2, y: (top + top + height) / 2}, vertex: {}}
 
   connect_arrows: ->
