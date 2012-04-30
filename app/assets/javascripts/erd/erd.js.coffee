@@ -91,7 +91,7 @@ class ERD
     $('form.add_column_form').on 'submit', @handle_add_column
     $('#changes_form').on 'submit', @handle_save
 
-  handle_save: ->
+  handle_save: =>
     j = '['
     rows = ($(tr).find('td') for tr in $('#changes > tbody > tr'))
     $(rows).each (i, row) ->
@@ -100,7 +100,7 @@ class ERD
     j += ']'
     $('#changes_form').find('input[name=changes]').val(j)
 
-  handle_add_column: (ev) ->
+  handle_add_column: (ev) =>
     ev.preventDefault()
     target = $(ev.target)
     name = target.find('input[name=name]').val()
@@ -108,7 +108,7 @@ class ERD
 
     model = target.find('input[name=model]').val()
     type  = target.find('input[name=type]').val()
-    upsert_change 'add_column', model, "#{name}(#{type})", '', ''
+    @upsert_change 'add_column', model, "#{name}(#{type})", '', ''
 
     name_span = $("<span/>", class: 'column_name_text')
       .append(name)
@@ -131,7 +131,7 @@ class ERD
       .find('a.add_column')
       .show()
 
-  handle_change_column_type: (ev) ->
+  handle_change_column_type: (ev) =>
     ev.preventDefault()
     target = $(ev.target)
     to = target.find('input[name=to]').val()
@@ -141,14 +141,14 @@ class ERD
     column = target.find('input[name=column]').val()
     type   = target.find('input[name=type]').val()
     if to != type
-      upsert_change 'alter_column', model, column, type, to
+      @upsert_change 'alter_column', model, column, type, to
 
     target.hide()
       .siblings('.column_type_text')
       .text(to)
       .show()
 
-  handle_rename_column: (ev) ->
+  handle_rename_column: (ev) =>
     ev.preventDefault()
     target = $(ev.target)
     to = target.find('input[name=to]').val()
@@ -157,14 +157,14 @@ class ERD
     model = target.find('input[name=model]').val()
     column = target.find('input[name=column]').val()
     if to != column
-      upsert_change 'rename_column', model, column, column, to
+      @upsert_change 'rename_column', model, column, column, to
 
     target.hide()
       .siblings('.column_name_text')
       .text(to)
       .show()
 
-  handle_rename_model: (ev) ->
+  handle_rename_model: (ev) =>
     ev.preventDefault()
     target = $(ev.target)
     to = target.find('input[name=to]').val()
@@ -172,16 +172,16 @@ class ERD
 
     model = target.find('input[name=model]').val()
     if to != model
-      upsert_change 'rename_model', model, '', model, to
+      @upsert_change 'rename_model', model, '', model, to
 
     target.hide()
       .siblings('.model_name_text')
       .text(to)
       .show()
 
-  handle_add_column_click: (ev) ->
+  handle_add_column_click: (ev) =>
     ev.preventDefault()
-    target = $(@)
+    target = $(ev.currentTarget)
 
     m = target.parents('div.model')
     if m.hasClass('noclick')
@@ -198,8 +198,8 @@ class ERD
       .val('')
       .focus()
 
-  handle_text_elem_click: (ev) ->
-    target = $(@)
+  handle_text_elem_click: (ev) =>
+    target = $(ev.currentTarget)
     text = target.text()
 
     m = target.parents('div.model')
