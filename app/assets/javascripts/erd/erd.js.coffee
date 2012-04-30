@@ -10,7 +10,15 @@ class ERD
     $(rows).each (i, row) ->
       existing = row if (action == $(row[0]).html()) && (model == $(row[1]).html()) && (column == $(row[2]).html())
     if existing == null
-      $('#changes > tbody').append("<tr><td>#{action}</td><td>#{model}</td><td>#{column}</td><td>#{from}</td><td>#{to}</td></tr>")
+      $('#changes > tbody').append("""
+        <tr>
+          <td data-name="action">#{action}</td>
+          <td data-name="model">#{model}</td>
+          <td data-name="column">#{column}</td>
+          <td data-name="from">#{from}</td>
+          <td data-name="to">#{to}</td>
+        </tr>
+      """)
     else
       $(existing[3]).text(from)
       $(existing[4]).text(to)
@@ -91,14 +99,16 @@ class ERD
     $('form.add_column_form').on 'submit', @handle_add_column
     $('#changes_form').on 'submit', @handle_save
 
-  handle_save: =>
-    j = '['
-    rows = ($(tr).find('td') for tr in $('#changes > tbody > tr'))
-    $(rows).each (i, row) ->
-      j += "{\"action\": \"#{$(row[0]).html()}\", \"model\": \"#{$(row[1]).html()}\", \"column\": \"#{$(row[2]).html()}\", \"from\": \"#{$(row[3]).html()}\", \"to\": \"#{$(row[4]).html()}\"}"
-      j += ',' if i < rows.length - 1
-    j += ']'
-    $('#changes_form').find('input[name=changes]').val(j)
+  handle_save: (ev) =>
+    changes = $('#changes > tbody > tr').map(->
+      change = {}
+      $(this).find('td').each ->
+        name = $(this).data('name')
+        value = $(this).html()
+        change[name] = value
+      change
+    ).toArray()
+    $('#changes_form').find('input[name=changes]').val(JSON.stringify(changes))
 
   handle_add_column: (ev) =>
     ev.preventDefault()
