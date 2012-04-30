@@ -65,6 +65,7 @@ class ERD
 
   handle_drag: (ev, ui) =>
     target = $(ev.target)
+    target.addClass('noclick')
     model = target.data('model_name')
     from = target.data('original_position')
     to = [target.css('left').replace(/px$/, ''), target.css('top').replace(/px$/, '')].join()
@@ -182,6 +183,11 @@ class ERD
     ev.preventDefault()
     target = $(@)
 
+    m = target.parents('div.model')
+    if m.hasClass('noclick')
+      m.removeClass('noclick')
+      return false
+
     target.hide()
       .next('form')
       .show()
@@ -196,6 +202,11 @@ class ERD
     target = $(@)
     text = target.text()
 
+    m = target.parents('div.model')
+    if m.hasClass('noclick')
+      m.removeClass('noclick')
+      return false
+
     target.hide()
       .next('form')
       .show()
@@ -205,10 +216,16 @@ class ERD
 
   handle_remove_model_click: (ev) =>
     ev.preventDefault()
-    return unless confirm('remove this table?')
 
     target = $(ev.target)
     parent = target.parent()
+
+    m = target.parents('div.model')
+    if m.hasClass('noclick')
+      m.removeClass('noclick')
+      return false
+
+    return unless confirm('remove this table?')
 
     [model_id, model_name] = [parent.attr('id'), parent.data('model_name')]
     upsert_change 'remove_model', model_name, '', '', ''
