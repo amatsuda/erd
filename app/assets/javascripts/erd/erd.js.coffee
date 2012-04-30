@@ -60,9 +60,9 @@ class ERD
         from.vertex.direction = 'h'
 
     if from.vertex.direction == 'h'
-      path = "M#{parseInt(from.vertex.x)} #{parseInt(from.vertex.y)}H#{parseInt((from.vertex.x + to.vertex.x) / 2)} V#{parseInt(to.vertex.y)} H#{parseInt(to.vertex.x)}"
+      path = "M#{Math.floor(from.vertex.x)} #{Math.floor(from.vertex.y)}H#{Math.floor((from.vertex.x + to.vertex.x) / 2)} V#{Math.floor(to.vertex.y)} H#{Math.floor(to.vertex.x)}"
     else
-      path = "M#{parseInt(from.vertex.x)} #{parseInt(from.vertex.y)}V#{parseInt((from.vertex.y + to.vertex.y) / 2)} H#{parseInt(to.vertex.x)} V#{parseInt(to.vertex.y)}"
+      path = "M#{Math.floor(from.vertex.x)} #{Math.floor(from.vertex.y)}V#{Math.floor((from.vertex.y + to.vertex.y) / 2)} H#{Math.floor(to.vertex.x)} V#{Math.floor(to.vertex.y)}"
 
     @paper.path(path).attr({'stroke-width': 2, opacity: 0.5, 'arrow-end': 'classic-wide-long'})
 
