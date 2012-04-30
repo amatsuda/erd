@@ -8,9 +8,8 @@ module Erd
 
   class ErdController < ::Erd::ApplicationController
     def index
-  #     `bundle exec rake erd filename=tmp/erd filetype=plain`
       Rails.application.eager_load!
-      RailsERD.options[:filename], RailsERD.options[:filetype] = 'tmp/erd', 'plain'
+      RailsERD.options[:filename], RailsERD.options[:filetype] = Rails.root.join('tmp/erd'), 'plain'
       RailsERD::Diagram::Graphviz.create
       plain = Rails.root.join('tmp/erd.plain').read
       positions = if (json = Rails.root.join('tmp/erd_positions.json')).exist?
@@ -23,7 +22,7 @@ module Erd
       migrated_versions = ActiveRecord::Base.connection.select_values("SELECT version FROM #{ActiveRecord::Migrator.schema_migrations_table_name}").map {|v| '%.3d' % v}
       @migrations = []
       ActiveRecord::Migrator.migrations_paths.each do |path|
-        Dir.foreach(path) do |file|
+        Dir.foreach(Rails.root.join(path)) do |file|
           if (version_and_name = /^(\d{3,})_(.+)\.rb$/.match(file))
             status = migrated_versions.delete(version_and_name[1]) ? 'up' : 'down'
             @migrations << {status: status, version: version_and_name[1], name: version_and_name[2]}
