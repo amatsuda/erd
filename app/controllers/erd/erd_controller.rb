@@ -125,6 +125,7 @@ module Erd
           ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection, file)
         end
       end
+      #TODO unload migraion classes
     end
 
     # a dirty workaround to make rspec-rails run
