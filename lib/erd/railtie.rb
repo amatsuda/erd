@@ -1,7 +1,10 @@
 require 'rails'
 require 'erd/engine'
 
+
 module Erd
+  autoload :Migrator, 'erd/migrator'
+
   class Railtie < ::Rails::Railtie #:nodoc:
     initializer 'erd' do |app|
       ActiveSupport.on_load(:after_initialize) do
