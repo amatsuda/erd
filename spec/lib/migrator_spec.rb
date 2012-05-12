@@ -34,10 +34,9 @@ describe Erd::Migrator do
   describe '.execute_generate_migration' do
     before do
       stub.proxy(Time).now {|t| stub(t).utc { Time.new 2012, 5, 12, 13, 26 } }
-      Erd::Migrator.execute_generate_migration 'create_foobars'
     end
     specify do
-      File.should be_exists Rails.root.join('db/migrate', '20120512132600_create_foobars.rb')
+      subject.execute_generate_migration('create_foobars').should eq Rails.root.join('db/migrate', '20120512132600_create_foobars.rb').to_s
     end
   end
 end

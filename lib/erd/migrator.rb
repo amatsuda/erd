@@ -35,11 +35,14 @@ module Erd
         #TODO unload migraion classes
       end
 
+      # runs `rails g migration [name]`
+      # @return generated migration filename
       def execute_generate_migration(name, options = nil)
         overwriting_argv([name, options]) do
           Rails::Generators.configure! Rails.application.config.generators
           result = Rails::Generators.invoke 'migration', [name, options], :behavior => :invoke, :destination_root => Rails.root
           raise ::Erd::MigrationError, "#{name}#{"(#{options})" if options}" unless result
+          result.last.last
         end
       end
 

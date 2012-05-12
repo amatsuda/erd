@@ -25,29 +25,23 @@ module Erd
       changes.each do |row|
         begin
           action, model, column, from, to = row['action'], row['model'].tableize, row['column'], row['from'], row['to']
-          before_migration_files = Dir.glob Rails.root.join('db', 'migrate', '*.rb')
           case action
           when 'remove_model'
-            Erd::Migrator.execute_generate_migration "drop_#{model}"
-            generated_migration_file = (Dir.glob(Rails.root.join('db', 'migrate', '*.rb')) - before_migration_files).first
+            generated_migration_file = Erd::Migrator.execute_generate_migration "drop_#{model}"
             gsub_file generated_migration_file, /def up.*  end/m, "def change\n    drop_table :#{model}\n  end"
           when 'rename_model'
             from, to = from.tableize, to.tableize
-            Erd::Migrator.execute_generate_migration "rename_#{from}_to_#{to}"
-            generated_migration_file = (Dir.glob(Rails.root.join('db', 'migrate', '*.rb')) - before_migration_files).first
+            generated_migration_file = Erd::Migrator.execute_generate_migration "rename_#{from}_to_#{to}"
             gsub_file generated_migration_file, /def up.*  end/m, "def change\n    rename_table :#{from}, :#{to}\n  end"
           when 'add_column'
             name_and_type = column.scan(/(.*)\((.*?)\)/).first
             name, type = name_and_type[0], name_and_type[1]
             Erd::Migrator.execute_generate_migration "add_#{name}_to_#{model}", ["#{name}:#{type}"]
-            generated_migration_file = (Dir.glob(Rails.root.join('db', 'migrate', '*.rb')) - before_migration_files).first
           when 'rename_column'
-            Erd::Migrator.execute_generate_migration "rename_#{model}_#{from}_to_#{to}"
-            generated_migration_file = (Dir.glob(Rails.root.join('db', 'migrate', '*.rb')) - before_migration_files).first
+            generated_migration_file = Erd::Migrator.execute_generate_migration "rename_#{model}_#{from}_to_#{to}"
             gsub_file generated_migration_file, /def up.*  end/m, "def change\n    rename_column :#{model}, :#{from}, :#{to}\n  end"
           when 'alter_column'
-            Erd::Migrator.execute_generate_migration "change_#{model}_#{column}_type_to_#{to}"
-            generated_migration_file = (Dir.glob(Rails.root.join('db', 'migrate', '*.rb')) - before_migration_files).first
+            generated_migration_file = Erd::Migrator.execute_generate_migration "change_#{model}_#{column}_type_to_#{to}"
             gsub_file generated_migration_file, /def up.*  end/m, "def change\n    change_column :#{model}, :#{column}, :#{to}\n  end"
           when 'move'
             json_file = Rails.root.join('tmp', 'erd_positions.json')
