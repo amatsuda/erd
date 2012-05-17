@@ -3,7 +3,6 @@ require 'spec_helper'
 feature 'erd#index' do
   scenario 'with author and book model' do
     visit '/erd'
-    puts page.body
     page.should have_content 'Author'
     page.should have_content 'name'
     page.should have_content 'Book'
