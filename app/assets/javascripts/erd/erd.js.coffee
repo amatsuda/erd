@@ -8,7 +8,7 @@ class ERD
         left = parseFloat $(this).css('left')
         top = parseFloat $(this).css('top')
         $(this).css({left: left * size, top: top * size})
-    @paper = Raphael(name, @elem.width(), @elem.height())
+    @paper = Raphael(name, @elem.width(), svg_height)
     @setup_handlers()
     models = @elem.find('.model')
     @models = {}
