@@ -1,6 +1,4 @@
-<div id="erd" style="border: 1px solid black; width: <%= width %>pt; height: <%= height %>pt;">
+<div id="erd" data-svg_width="<%= width %>" data-svg_height="<%= height %>">
   <%= render :partial => 'erd/erd/model', :collection => models -%>
-  <svg width="<%= width %>pt" height="<%= height %>pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  </svg>
   <script>window.raw_edges = <%= edges.to_json.html_safe %>;</script>
 </div>

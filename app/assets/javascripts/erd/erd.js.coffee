@@ -1,8 +1,20 @@
 class ERD
   constructor: (@name, @elem, @edges) ->
-    @paper = Raphael(name, @elem.css('width'), @elem.css('height'))
+    svg_width = @elem.data('svg_width')
+    svg_height = @elem.data('svg_height')
+    if (svg_width > @elem.width())
+      size = @elem.width() / svg_width
+      $('#erd > .model').each ->
+        left = parseFloat $(this).css('left')
+        top = parseFloat $(this).css('top')
+        $(this).css({left: left * size, top: top * size})
+    @paper = Raphael(name, @elem.width(), @elem.height())
     @setup_handlers()
-    @connect_arrows()
+    models = @elem.find('.model')
+    @models = {}
+    for model in models
+      @models[$(model).data('model_name')] = model
+    @connect_arrows(@edges)
 
   upsert_change: (action, model, column, from, to) ->
     rows = ($(tr).find('td') for tr in $('#changes > tbody > tr'))
@@ -28,13 +40,15 @@ class ERD
     [left, width, top, height] = [parseFloat(div.css('left')), parseFloat(div.css('width')), parseFloat(div.css('top')), parseFloat(div.css('height'))]
     {left: left, right: left + width, top: top, bottom: top + height, center: {x: (left + left + width) / 2, y: (top + top + height) / 2}, vertex: {}}
 
-  connect_arrows: ->
-    $.each @edges, (i, edge) =>
-      @connect_arrow $("##{edge.from}"), $("##{edge.to}")
+  connect_arrows: (edges) =>
+    $.each edges, (i, edge) =>
+      @connect_arrow edge, $(@models[edge.from]), $(@models[edge.to])
 
-  connect_arrow: (from_elem, to_elem) ->
+  connect_arrow: (edge, from_elem, to_elem) ->
     #TODO handle self referential associations
     return if from_elem.attr('id') == to_elem.attr('id')
+
+    edge.path.remove() if edge.path?
 
     from = @positions(from_elem)
     to = @positions(to_elem)
@@ -64,7 +78,7 @@ class ERD
     else
       path = "M#{Math.floor(from.vertex.x)} #{Math.floor(from.vertex.y)}V#{Math.floor((from.vertex.y + to.vertex.y) / 2)} H#{Math.floor(to.vertex.x)} V#{Math.floor(to.vertex.y)}"
 
-    @paper.path(path).attr({'stroke-width': 2, opacity: 0.5, 'arrow-end': 'classic-wide-long'})
+    edge.path = @paper.path(path).attr({'stroke-width': 2, opacity: 0.5, 'arrow-end': 'classic-wide-long'})
 
   setup_handlers: ->
     @setup_click_handlers()
@@ -74,21 +88,14 @@ class ERD
   handle_drag: (ev, ui) =>
     target = $(ev.target)
     target.addClass('noclick')
-    model = target.data('model_name')
+    model_name = target.data('model_name')
     from = target.data('original_position')
     to = [target.css('left').replace(/px$/, ''), target.css('top').replace(/px$/, '')].join()
-    @upsert_change 'move', model, '', '', to
-    @paper.clear()
-    @connect_arrows(@edges)
+    @upsert_change 'move', model_name, '', '', to
+    @connect_arrows(@edges.filter((e)-> e.from == model_name || e.to == model_name))
 
   setup_click_handlers: ->
-    text_elems = [
-      'div.model_name_text',
-      'span.column_name_text',
-      'span.column_type_text'
-    ].join()
-
-    $(text_elems).on 'click', @handle_text_elem_click
+    $('div.model_name_text, span.column_name_text, span.column_type_text').on 'click', @handle_text_elem_click
     $('div.model a.add_column').on 'click', @handle_add_column_click
     $('div.model a.close').on 'click', @handle_remove_model_click
 
@@ -237,12 +244,12 @@ class ERD
 
     return unless confirm('remove this table?')
 
-    [model_id, model_name] = [parent.attr('id'), parent.data('model_name')]
+    model_name = parent.data('model_name')
     upsert_change 'remove_model', model_name, '', '', ''
     parent.hide()
 
     $.each @edges, (i, edge) =>
-      @edges.splice i, 1 if (edge.from == model_id) || (edge.to == model_id)
+      @edges.splice i, 1 if (edge.from == model_name) || (edge.to == model_name)
     @paper.clear()
     @connect_arrows(@edges)
 
