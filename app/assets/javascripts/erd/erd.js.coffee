@@ -1,14 +1,6 @@
 class ERD
   constructor: (@name, @elem, @edges) ->
-    svg_width = @elem.data('svg_width')
-    svg_height = @elem.data('svg_height')
-    if (svg_width > @elem.width())
-      size = @elem.width() / svg_width
-      $('#erd > .model').each ->
-        left = parseFloat $(this).css('left')
-        top = parseFloat $(this).css('top')
-        $(this).css({left: left * size, top: top * size})
-    @paper = Raphael(name, @elem.width(), svg_height)
+    @paper = Raphael(name, @elem.data('svg_width'), @elem.data('svg_height'))
     @setup_handlers()
     models = @elem.find('.model')
     @models = {}
