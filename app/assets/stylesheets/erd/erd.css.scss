@@ -28,7 +28,6 @@ li {
 }
 
 #migration {
-
   table {
     td {
       font-size: small;
@@ -40,7 +39,6 @@ li {
 }
 
 #erd {
-
   form {
     * {
       float: left;
@@ -136,14 +134,46 @@ li {
   }
 }
 
+#executed,#failed {
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+
+  h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 5px 5px 15px;
+    font-size: 12px;
+    margin: -7px;
+    margin-bottom: 0px;
+    color: #fff;
+  }
+  h3 {
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+  }
+  ul li {
+    margin-left: 25px;
+    font-size: 12px;
+    list-style: square;
+  }
+}
+
+
 #executed {
   border: 2px #0f0 solid;
-  padding: 2px;
+  h2 {
+    background-color: #0c0;
+  }
 }
 
 #failed {
   border: 2px #f00 solid;
-  padding: 2px;
+  h2 {
+    background-color: #c00;
+  }
 }
 
 #model_name_changes, #column_name_changes {
@@ -154,4 +184,3 @@ table, th, td {
   border: 1px #000 solid;
   border-collapse: collapse;
 }
-

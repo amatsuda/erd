@@ -6,7 +6,7 @@
   <div id="migration">
     <%- if flash[:executed_migrations].present? -%>
       <div id="executed">
-        Successfully executed the following migrations!
+        <h2>Successfully executed the following migrations!</h2>
         <%- [:up, :down].each do |direction| -%>
           <h3><%= direction %></h3>
           <ul>
@@ -19,7 +19,7 @@
     <%- end -%>
     <%- if flash[:failed_migrations].present? -%>
       <div id="failed">
-        failed migrations
+        <h2>failed migrations</h2>
         <ul>
         <%- flash[:failed_migrations].each do |m| -%>
           <li><%= m %></li>
