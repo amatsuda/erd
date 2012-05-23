@@ -42,7 +42,7 @@
         <thead><tr><th>status</th><th>version</th><th>name</th></tr></thead>
         <tbody>
           <%- @migrations.each do |m| -%>
-            <tr><td><label><%= check_box_tag (m[:status] == 'up' ? 'down[]' : 'up[]'), m[:version] %><%= m[:status] %></label></td><td><%= m[:version] %></td><td><%= m[:name] %></td></tr>
+            <tr><td><label><%= check_box_tag (m[:status] == 'up' ? 'down[]' : 'up[]'), m[:filename] %><%= m[:status] %></label></td><td><%= m[:version] %></td><td><%= m[:name] %></td></tr>
           <%- end -%>
         </tbody>
       </table>
