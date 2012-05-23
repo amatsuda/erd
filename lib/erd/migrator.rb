@@ -21,11 +21,16 @@ module Erd
       end
 
       # `rake db:migrate`
+      # example:
+      #   run_migrations up: '/Users/a_matsuda/my_app/db/migrate/20120423023323_create_products.rb'
+      #   run_migrations up: '20120512020202', down: ...
+      #   run_migrations up: ['20120512020202', '20120609010203', ...]
       def run_migrations(migrations)
-        migrations.each do |direction, versions|
-          versions.each do |version|
+        migrations.each do |direction, version_or_filenames|
+          Array.wrap(version_or_filenames).each do |version_or_filename|
+            /^(?<version>\d{3,})/ =~ File.basename(version_or_filename)
             ActiveRecord::Migrator.run(direction, ActiveRecord::Migrator.migrations_path, version.to_i)
-          end if versions
+          end if version_or_filenames
         end
         if ActiveRecord::Base.schema_format == :ruby
           File.open(ENV['SCHEMA'] || "#{Rails.root}/db/schema.rb", 'w') do |file|

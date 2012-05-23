@@ -26,8 +26,11 @@ describe Erd::Migrator do
       mock(ActiveRecord::Migrator).run(:up, 'db/migrate', 20999999999999)
       mock(ActiveRecord::SchemaDumper).dump(ActiveRecord::Base.connection, anything)
     end
-    specify do
+    it 'runs migration by version number' do
       subject.run_migrations(:up => ['20999999999999'])
+    end
+    it 'runs migration by migration filename' do
+      subject.run_migrations(:up => [Rails.root.join('db/migrate/20999999999999_create_foobars.rb')])
     end
   end
 
