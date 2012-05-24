@@ -39,6 +39,14 @@ li {
 }
 
 #migration_status {
+  width: 386px;
+  td.migration_file_name {
+    word-break: break-all;
+  }
+  td label {
+    white-space: nowrap;
+  }
+
   tr.up {
     font-size: 0;
     height: 1px;
