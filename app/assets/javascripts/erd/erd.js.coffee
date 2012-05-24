@@ -252,3 +252,7 @@ class ERD
 
 $ ->
   window.erd = new ERD('erd', $('#erd'), window.raw_edges)
+
+  $('#erd').css('height', window.innerHeight)
+  $(window).on 'resize', ->
+    $('#erd').css('height', window.innerHeight)
