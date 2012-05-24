@@ -51,6 +51,17 @@ li {
     input {
       display: none;
     }
+    &:hover {
+      height: auto;
+      * {
+        font-size: small;
+        height: auto;
+        overflow: auto;
+      }
+      input {
+        display: inline-block;
+      }
+    }
   }
 }
 
