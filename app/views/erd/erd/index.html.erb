@@ -8,12 +8,14 @@
       <div id="executed">
         <h2>Successfully executed the following migrations!</h2>
         <%- [:up, :down].each do |direction| -%>
-          <h3><%= direction %></h3>
-          <ul>
-          <%- flash[:executed_migrations][direction].each do |m| -%>
-            <li><%= m %></li>
+          <%- if flash[:executed_migrations][direction].present? -%>
+            <h3><%= direction %></h3>
+            <ul>
+            <%- flash[:executed_migrations][direction].each do |m| -%>
+              <li><%= m %></li>
+            <%- end -%>
+            </ul>
           <%- end -%>
-          </ul>
         <%- end -%>
       </div>
     <%- end -%>
