@@ -51,7 +51,7 @@ li {
     input {
       display: none;
     }
-    &:hover {
+    &:hover,&.active {
       height: auto;
       * {
         font-size: small;

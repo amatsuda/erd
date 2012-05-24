@@ -75,6 +75,7 @@ class ERD
   setup_handlers: ->
     @setup_click_handlers()
     @setup_submit_handlers()
+    @setup_migration_event_handlers()
     $('div.model').draggable(drag: @handle_drag)
 
   handle_drag: (ev, ui) =>
@@ -97,6 +98,10 @@ class ERD
     $('form.alter_column_form').on 'submit', @handle_change_column_type
     $('form.add_column_form').on 'submit', @handle_add_column
     $('#changes_form').on 'submit', @handle_save
+
+  setup_migration_event_handlers: ->
+    $('#migration_status tr input').on 'click', ->
+      $(this).parents('tr').toggleClass('active')
 
   handle_save: (ev) =>
     changes = $('#changes > tbody > tr').map(->
@@ -247,4 +252,3 @@ class ERD
 
 $ ->
   window.erd = new ERD('erd', $('#erd'), window.raw_edges)
-
