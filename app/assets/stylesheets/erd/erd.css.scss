@@ -38,6 +38,18 @@ li {
   }
 }
 
+@mixin active-migration {
+  height: auto;
+  * {
+    font-size: small;
+    height: auto;
+    overflow: auto;
+  }
+  input {
+    display: inline-block;
+  }
+}
+
 #migration_status {
   width: 386px;
   td.migration_file_name {
@@ -60,15 +72,7 @@ li {
       display: none;
     }
     &:hover,&.active {
-      height: auto;
-      * {
-        font-size: small;
-        height: auto;
-        overflow: auto;
-      }
-      input {
-        display: inline-block;
-      }
+      @include active-migration;
     }
   }
 }
