@@ -49,8 +49,6 @@ Browse at your http://localhost:3000/erd
 
 * drop column (need to think of the UI)
 
-* performance (with large number of models)
-
 * stop depending on rails-erd and Graphviz
 
 * tests
