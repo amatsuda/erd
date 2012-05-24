@@ -1,4 +1,4 @@
-html, body, p, ul, ol, dl, p, li, dt, dd, form {
+html, body, p, ul, ol, dl, p, li, dt, dd, tr, td, form {
   margin: 0;
   padding: 0;
 }
@@ -34,6 +34,22 @@ li {
     }
     th {
       @include table-header;
+    }
+  }
+}
+
+#migration_status {
+  tr.up {
+    font-size: 0;
+    height: 1px;
+    overflow: hidden;
+    * {
+      font-size: 0;
+      height: 1px;
+      overflow: hidden;
+    }
+    input {
+      display: none;
     }
   }
 }
