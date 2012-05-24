@@ -41,7 +41,12 @@
     <%= form_tag '/erd/migrate', :method => :put do %>
       <table id="migration_status">
         <caption>migration status</caption>
-        <thead><tr><th>status</th><th>version</th><th>name</th></tr></thead>
+        <thead>
+          <tr><th>status</th><th>version</th><th>name</th></tr>
+          <tr><td colspan="3">
+            <button>UNFOLD ALL</button>
+          </td></tr>
+        </thead>
         <tbody>
           <%- @migrations.each do |m| -%>
             <tr class="<%= m[:status] %>">

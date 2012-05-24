@@ -29,6 +29,14 @@ li {
 
 #migration {
   table {
+    thead {
+      td {
+        text-align: center;
+        button {
+          padding: 3px 30px;
+        }
+      }
+    }
     td {
       font-size: small;
     }
@@ -72,6 +80,12 @@ li {
       display: none;
     }
     &:hover,&.active {
+      @include active-migration;
+    }
+  }
+
+  &.show_all_migrations {
+    tr.up {
       @include active-migration;
     }
   }

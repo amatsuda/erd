@@ -102,6 +102,9 @@ class ERD
   setup_migration_event_handlers: ->
     $('#migration_status tr input').on 'click', ->
       $(this).parents('tr').toggleClass('active')
+    $('#migration_status thead td button').on 'click', (ev) ->
+      ev.preventDefault()
+      $('#migration_status').toggleClass('show_all_migrations')
 
   handle_save: (ev) =>
     changes = $('#changes > tbody > tr').map(->
