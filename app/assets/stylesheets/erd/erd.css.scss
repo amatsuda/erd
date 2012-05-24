@@ -39,6 +39,9 @@ li {
 }
 
 #erd {
+  overflow: auto;
+  position: relative;
+
   form {
     * {
       float: left;
