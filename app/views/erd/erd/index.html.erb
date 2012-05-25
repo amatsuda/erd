@@ -12,7 +12,7 @@
             <h3><%= direction %></h3>
             <ul>
             <%- flash[:executed_migrations][direction].each do |m| -%>
-              <li><%= m %></li>
+              <li><%= File.basename m %></li>
             <%- end -%>
             </ul>
           <%- end -%>
