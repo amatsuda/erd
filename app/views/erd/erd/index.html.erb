@@ -6,7 +6,7 @@
   <div id="migration">
     <%- if flash[:executed_migrations].present? -%>
       <div id="executed">
-        <h2>Successfully executed the following migrations!</h2>
+        <h2>Successfully executed following <%= flash[:executed_migrations].values.flatten.count %> migrations!</h2>
         <%- [:up, :down].each do |direction| -%>
           <%- if flash[:executed_migrations][direction].present? -%>
             <h3><%= direction %></h3>
@@ -45,6 +45,7 @@
           <tr><th>status</th><th>version</th><th>name</th></tr>
           <tr><td colspan="3">
             <button>UNFOLD ALL</button>
+            <%= @migrations.count %> migrations in total (up: <%= @migrations.count {|m| m[:status] == 'up'} %>, down: <%= @migrations.count {|m| m[:status] == 'down'} %>)
           </td></tr>
         </thead>
         <tbody>
@@ -57,7 +58,7 @@
           <%- end -%>
         </tbody>
       </table>
-    <%= submit_tag 'run migrations' %>
+      <%= submit_tag 'run migrations' %>
     <% end %>
   </div>
 </div>
