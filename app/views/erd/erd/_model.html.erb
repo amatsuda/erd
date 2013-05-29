@@ -1,16 +1,45 @@
 <div id="erd-<%= model[:model] %>" class="model" style="top: <%= model[:y] %>px; left: <%= model[:x] %>px;" data-model_name="<%= model[:model] %>">
-  <a href="#!" class="close"> x </a>
+  <a href="#!" class="close"><%= image_tag 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NTExMTA1MjMzRUMxMTFFMkJDNjQ4QUM5N0I1ODJDNUMiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NTExMTA1MjQzRUMxMTFFMkJDNjQ4QUM5N0I1ODJDNUMiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1MTExMDUyMTNFQzExMUUyQkM2NDhBQzk3QjU4MkM1QyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1MTExMDUyMjNFQzExMUUyQkM2NDhBQzk3QjU4MkM1QyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pjsg+BcAAADiSURBVHjavNaBDcIgEADAtnEBVnCFruAKrkBHcBZdwRFcQVfREV5QSID24Z9//eRTCuQvbcKHEQCGf8RUvFuXs1LtvJb/opAWvvF0OSfzPbmqFReOkIcEsxu1TFw0Lu8KWIlAmMt+nRRDkRKSYFVkC+rBmggGcTASUoMoGBlpQTXsxEEoEIaxECrUwiylxkTsWy+XV2T+QaogOIysQ92L3LiYpK2cOZiorXAwCcLCpAgZ00BImBbSxOKGgwJSw/bYBiu8nKS1/HjYJU1iCU/fUi7Cq9ZSjscfXiBN6IWfeAswAPwFJ+lOAhBOAAAAAElFTkSuQmCC' %></a>
   <div class="model_name">
     <div class="model_name_text"><%= model[:model] %></div>
-    <form class="rename_model_form"><span><input name="model" type="hidden" value="<%= model[:model] %>" /><input name="to" type="text" /><input type="submit" value="Change" /></span></form>
+    <form class="rename_model_form">
+      <table>
+        <tr>
+          <td>
+            <input name="model" type="hidden" value="<%= model[:model] %>"/>
+          </td>
+          <td>
+            <input name="to" type="text" /><input type="submit" value="Change"/>
+          </td>
+        </tr>
+      </table>
+      <a href="#!" class="cancel">Cancel</a>
+    </form>
   </div>
   <div class="columns">
-    <ul>
-      <%= render :partial => 'erd/erd/column', :collection => model[:columns], :locals => {:model => model} -%>
-    </ul>
+    <%= render :partial => 'erd/erd/column', :collection => model[:columns], :locals => {:model => model} -%>
   </div>
   <div class="add_column_box">
     <a href="#!" class="add_column">add column</a>
-    <form class="add_column_form"><span><input name="model" type="hidden" value="<%= model[:model] %>" /><input name="name" type="text" /><span>:</span><input name="type" type="text" value="string" /><input type="submit" value="Add" /></span></form>
+    <form class="add_column_form">
+      <input name="model" type="hidden" value="<%= model[:model] %>" />
+      <table>
+        <tr>
+          <td>
+            <input name="name" type="text" />
+          </td>
+          <td>
+            :
+          </td>
+          <td>
+            <input name="type" type="text" value="string" />
+          </td>
+          <td>
+            <input type="submit" value="Add" />
+          </td>
+        </tr>
+      </table>
+      <a href="#!" class="cancel">Cancel</a>
+    </form>
   </div>
 </div>
