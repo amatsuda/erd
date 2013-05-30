@@ -133,10 +133,10 @@ class ERD
     name_span = $("<span/>", class: 'column_name_text')
       .append(name)
 
-    type_span = $("<span/>", class: 'column_type_text')
+    type_span = $("<span/>", class: 'column_type_text unsaved')
       .append(type)
 
-    li_node = $("<li/>", class: 'column')
+    li_node = $("<li/>", class: 'column unsaved')
       .append(name_span)
       .append("&nbsp;")
       .append(type_span)
@@ -167,6 +167,9 @@ class ERD
       .siblings('.column_type_text')
       .text(to)
       .show()
+      .addClass('unsaved')
+      .parents('.column')
+      .addClass('unsaved')
 
   handle_rename_column: (ev) =>
     ev.preventDefault()
@@ -183,6 +186,8 @@ class ERD
       .siblings('.column_name_text')
       .text(to)
       .show()
+      .parents('.column')
+      .addClass('unsaved')
 
   handle_rename_model: (ev) =>
     ev.preventDefault()
@@ -198,6 +203,7 @@ class ERD
       .siblings('.model_name_text')
       .text(to)
       .show()
+      .addClass('unsaved')
 
   handle_add_column_click: (ev) =>
     ev.preventDefault()

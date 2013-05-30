@@ -17,7 +17,9 @@
     </form>
   </div>
   <div class="columns">
-    <%= render :partial => 'erd/erd/column', :collection => model[:columns], :locals => {:model => model} -%>
+    <ul>
+      <%= render :partial => 'erd/erd/column', :collection => model[:columns], :locals => {:model => model} -%>
+    </ul>
   </div>
   <div class="add_column_box">
     <a href="#!" class="add_column">add column</a>

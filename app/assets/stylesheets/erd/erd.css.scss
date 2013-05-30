@@ -94,9 +94,38 @@ $set_prefix: -webkit-, -moz-, -ms-, -o-, "";
 @mixin column_type_text_color($color: #999999) {
   border-color: $color;
   background: desaturate(lighten($color, 30%), 20%);
+  color: $black;
+  border-style: solid;
   &:hover {
     border-color: darken($color, 10%);
     background: darken(desaturate(lighten($color, 30%), 20%), 10%);
+  }
+}
+
+@mixin unsaved {
+  background: $yellow;
+  position: relative;
+  &:before {
+    content: "!";
+    display: block;
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: #ec7500;
+    left: -14px;
+    top: 6px;
+    text-align: center;
+    line-height: 18px;
+    color: $white;
+    @include border-radius(100px);
+    @include box-shadow(rgba(0, 0, 0, 0.4) 0px 1px 1px);
+    font: {
+      size: 12px;
+      family: Arial, sans-serif;
+    };
+  }
+  &:hover {
+    background: $yellow - 6;
   }
 }
 
@@ -303,6 +332,11 @@ li {
         text-align: center;
         display: block;
         @include table-header;
+        &.unsaved {
+          background: $yellow;
+          position: relative;
+          @include unsaved;
+        }
       }
       form {
         @include table-header;
@@ -363,81 +397,85 @@ li {
 }
 
 .columns {
-  > div {
-    &.column {
-      border-bottom: dotted 1px #cccccc;
-      padding: 0 0.8em;
-      overflow: hidden;
-      clear: both;
-      line-height: 28px;
-      font-size: 14px;
-      table {
-        width: 100%;
-      }
-      &:nth-child(even) {
-        background: $white - 6;
-      }
-      &:last-child {
-        border-bottom: none;
-      }
-      .column_name_text,
-      .column_type_text {
-        cursor: pointer;
-      }
-      .column_name_text {
-        margin: 0 1.4em 0 0;
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-      .rename_column_form {
-        padding: 8px;
-      }
-      .column_type_text {
-        font-size: 10px;
-        float: right;
-        display: block;
-        line-height: 16px;
-        margin: 5px 0 0;
-        @include border-radius(4px);
-        border-width: 1px;
-        border-style: solid;
-        width: 70px;
-        text-align: center;
-        &.date,
-        &.time,
-        &.timestamp,
-        &.datetime {
-          @include column_type_text_color(#da6272);
-        }
-        &.boolean {
-          @include column_type_text_color(#45a1cf);
-        }
-        &.text {
-          @include column_type_text_color(#dab24f);
-        }
-        &.decimal {
-          @include column_type_text_color(#8e8e08);
-        }
-        &.float {
-          @include column_type_text_color(#85616b);
-        }
-        &.integer {
-          @include column_type_text_color(#7c80aa);
-        }
-        &.primary_key {
-          @include column_type_text_color(#ea9a5d);
-        }
-        &.string {
-          @include column_type_text_color(#a4c520);
-        }
-      }
-      .alter_column_form {
-        padding: 8px;
-      }
+  .column {
+    border-bottom: dotted 1px #cccccc;
+    padding: 0 0.8em;
+    clear: both;
+    line-height: 28px;
+    font-size: 14px;
+    table {
+      width: 100%;
+    }
+    &:nth-child(even) {
+      background: $white - 6;
+    }
+    &:last-child {
+      border-bottom: none;
+    }
+    .column_name_text,
+    .column_type_text {
+      cursor: pointer;
+    }
+    .column_name_text {
+      margin: 0 1.4em 0 0;
       &:hover {
-        background-color: $yellow;
+        text-decoration: underline;
       }
+    }
+    &.unsaved {
+      @include unsaved;
+    }
+    .rename_column_form {
+      padding: 8px;
+    }
+    .column_type_text {
+      font-size: 10px;
+      float: right;
+      display: block;
+      line-height: 16px;
+      margin: 5px 0 0;
+      @include border-radius(4px);
+      border-width: 1px;
+      border-style: solid;
+      width: 70px;
+      text-align: center;
+      @include column_type_text_color(#e98c60);
+      &.date,
+      &.time,
+      &.timestamp,
+      &.datetime {
+        @include column_type_text_color(#da6272);
+      }
+      &.boolean {
+        @include column_type_text_color(#45a1cf);
+      }
+      &.text {
+        @include column_type_text_color(#dab24f);
+      }
+      &.decimal {
+        @include column_type_text_color(#8e8e08);
+      }
+      &.float {
+        @include column_type_text_color(#85616b);
+      }
+      &.integer {
+        @include column_type_text_color(#7c80aa);
+      }
+      &.primary_key {
+        @include column_type_text_color(#ea9a5d);
+      }
+      &.string {
+        @include column_type_text_color(#a4c520);
+      }
+      &.unsaved {
+        @include column_type_text_color(#a55d00);
+      }
+    }
+    .alter_column_form {
+      padding: 8px;
+    }
+    &:hover {
+      background-color: $white - 20;
     }
   }
 }
