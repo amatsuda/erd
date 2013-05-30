@@ -326,3 +326,14 @@ $ ->
   
   $("#open_migration").click ->
     $('#close_migration').css('right', $('#migration').width() + ($(this).width() / 2) - 5)
+  
+  $('#open_up').click ->
+    $('#migration_status .up').addClass('open')
+    $('#migration_status .down').removeClass('open')
+  
+  $('#open_down').click ->
+    $('#migration_status .down').addClass('open')
+    $('#migration_status .up').removeClass('open')
+
+  $('#close_all').click ->
+    $('#migration_status tr').removeClass('open')

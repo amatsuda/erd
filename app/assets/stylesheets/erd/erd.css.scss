@@ -207,6 +207,18 @@ li {
 #open_migration {
   right: 15px;
 }
+#migrate_form {
+  position: relative;
+  #open_buttons {
+    position: absolute;
+    right: 0;
+    top: 0;
+    li {
+      @include inline-block;
+    }
+  }
+}
+
 
 #migration {
   padding: 10px 10px;
@@ -291,7 +303,7 @@ li {
       input {
         display: none;
       }
-      &:hover,&.active {
+      &:hover,&.active,&.open {
         @include active-migration;
       }
       &.active {

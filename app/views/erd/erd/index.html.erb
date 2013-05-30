@@ -39,7 +39,12 @@
       <%= hidden_field_tag 'changes' %>
       <%= submit_tag 'save changes' %>
     <% end %>
-    <%= form_tag '/erd/migrate', :method => :put do %>
+    <%= form_tag '/erd/migrate', :method => :put, :id => 'migrate_form' do %>
+      <ul id="open_buttons">
+        <li><button id="open_up" type="button">up</button></li>
+        <li><button id="open_down" type="button">down</button></li>
+        <li><button id="close_all" type="button">close</button></li>
+      </ul>
       <table id="migration_status">
         <caption>migration status</caption>
         <thead>
