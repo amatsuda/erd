@@ -1,1 +1,14 @@
-<li class="column"><span class="column_name_text"><%= column[:name] %></span><form class="rename_column_form"><span><input name="model" type="hidden" value="<%= model[:model] %>" /><input name="column" type="hidden" value="<%= column[:name] %>" /><input name="to" type="text" /><input type="submit" value="Change" /></span></form>&nbsp;<span class="column_type_text"><%= column[:type] %></span><form class="alter_column_form"><span><input name="model" type="hidden" value="<%= model[:model] %>" /><input name="column" type="hidden" value="<%= column[:name] %>" /><input name="type" type="hidden" value="<%= column[:type] %>" /><input name="to" type="text" /><input type="submit" value="Change" /></span></form></li>
+<li class="column">
+  <table>
+    <tr>
+      <td>
+        <span class="column_name_text"><%= column[:name] %></span>
+        <form class="rename_column_form"><span><input name="model" type="hidden" value="<%= model[:model] %>" /><input name="column" type="hidden" value="<%= column[:name] %>" /><input name="to" type="text" /><input type="submit" value="Change" /></span><a href="#!" class="cancel">Cancel</a></form>
+      </td>
+      <td>
+        <span class="column_type_text <%= column[:type].delete(" ∗") %>"><%= column[:type] %></span>
+        <form class="alter_column_form"><span><input name="model" type="hidden" value="<%= model[:model] %>" /><input name="column" type="hidden" value="<%= column[:name] %>" /><input name="type" type="hidden" value="<%= column[:type] %>" /><input name="to" type="text" /><input type="submit" value="Change" /></span><a href="#!" class="cancel">Cancel</a></form>
+      </td>
+    </tr>
+  </table>
+</li>

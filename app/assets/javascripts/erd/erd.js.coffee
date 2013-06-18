@@ -90,7 +90,10 @@ class ERD
   setup_click_handlers: ->
     $('div.model_name_text, span.column_name_text, span.column_type_text').on 'click', @handle_text_elem_click
     $('div.model a.add_column').on 'click', @handle_add_column_click
+    $('div.model a.cancel').on 'click', @handle_cancel_click
     $('div.model a.close').on 'click', @handle_remove_model_click
+    $('div#open_migration').on 'click', @handle_open_migration_click
+    $('div#close_migration').on 'click', @handle_close_migration_click
 
   setup_submit_handlers: ->
     $('form.rename_model_form').on 'submit', @handle_rename_model
@@ -130,10 +133,10 @@ class ERD
     name_span = $("<span/>", class: 'column_name_text')
       .append(name)
 
-    type_span = $("<span/>", class: 'column_type_text')
+    type_span = $("<span/>", class: 'column_type_text unsaved')
       .append(type)
 
-    li_node = $("<li/>", class: 'column')
+    li_node = $("<li/>", class: 'column unsaved')
       .append(name_span)
       .append("&nbsp;")
       .append(type_span)
@@ -164,6 +167,9 @@ class ERD
       .siblings('.column_type_text')
       .text(to)
       .show()
+      .addClass('unsaved')
+      .parents('.column')
+      .addClass('unsaved')
 
   handle_rename_column: (ev) =>
     ev.preventDefault()
@@ -180,6 +186,8 @@ class ERD
       .siblings('.column_name_text')
       .text(to)
       .show()
+      .parents('.column')
+      .addClass('unsaved')
 
   handle_rename_model: (ev) =>
     ev.preventDefault()
@@ -195,6 +203,7 @@ class ERD
       .siblings('.model_name_text')
       .text(to)
       .show()
+      .addClass('unsaved')
 
   handle_add_column_click: (ev) =>
     ev.preventDefault()
@@ -208,12 +217,30 @@ class ERD
     target.hide()
       .next('form')
       .show()
+      .find('a.cancel')
+      .show()
       .find('input[name=type]')
       .val('string')
       .end()
       .find('input[name=name]')
       .val('')
       .focus()
+  
+  handle_cancel_click: (ev) =>
+    ev.preventDefault()
+    target = $(ev.currentTarget)
+
+    m = target.parents('div.model')
+    if m.hasClass('noclick')
+      m.removeClass('noclick')
+      return false
+
+    target.hide()
+      .parent('form')
+      .hide()
+      .prev('a.add_column, span, div')
+      .show()
+
 
   handle_text_elem_click: (ev) =>
     target = $(ev.currentTarget)
@@ -226,6 +253,8 @@ class ERD
 
     target.hide()
       .next('form')
+      .show()
+      .find('a.cancel')
       .show()
       .find('input[name=to]')
       .val(text)
@@ -252,6 +281,41 @@ class ERD
       @edges.splice i, 1 if (edge.from == model_name) || (edge.to == model_name)
     @paper.clear()
     @connect_arrows(@edges)
+  
+  handle_open_migration_click: (ev) =>
+    ev.preventDefault()
+    
+    target = $(ev.currentTarget)
+    text = target.text()
+    
+    m = target.parents('div.model')
+    if m.hasClass('noclick')
+      m.removeClass('noclick')
+      return false
+    
+    target.hide()
+      .next('div')
+      .show()
+      .find('#close_migration')
+      .show()
+      
+    
+  handle_close_migration_click: (ev) =>
+    ev.preventDefault()
+    
+    target = $(ev.currentTarget)
+    text = target.text()
+    
+    m = target.parents('div.model')
+    if m.hasClass('noclick')
+      m.removeClass('noclick')
+      return false
+    
+    target.hide()
+      .parent()
+      .hide()
+      .prev('div')
+      .show()
 
 $ ->
   window.erd = new ERD('erd', $('#erd'), window.raw_edges)
@@ -259,3 +323,17 @@ $ ->
   $('#erd').css('height', window.innerHeight)
   $(window).on 'resize', ->
     $('#erd').css('height', window.innerHeight)
+  
+  $("#open_migration").click ->
+    $('#close_migration').css('right', $('#migration').width() + ($(this).width() / 2) - 5)
+  
+  $('#open_up').click ->
+    $('#migration_status .up').addClass('open')
+    $('#migration_status .down').removeClass('open')
+  
+  $('#open_down').click ->
+    $('#migration_status .down').addClass('open')
+    $('#migration_status .up').removeClass('open')
+
+  $('#close_all').click ->
+    $('#migration_status tr').removeClass('open')
