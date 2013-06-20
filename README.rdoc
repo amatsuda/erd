@@ -39,8 +39,6 @@ Browse at your http://localhost:3000/erd
 
 == TODO
 
-* Better design
-
 * Better UI
 
 * Fix buggy JS
