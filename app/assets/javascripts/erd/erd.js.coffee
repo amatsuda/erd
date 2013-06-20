@@ -225,7 +225,7 @@ class ERD
       .find('input[name=name]')
       .val('')
       .focus()
-  
+
   handle_cancel_click: (ev) =>
     ev.preventDefault()
     target = $(ev.currentTarget)
@@ -281,36 +281,36 @@ class ERD
       @edges.splice i, 1 if (edge.from == model_name) || (edge.to == model_name)
     @paper.clear()
     @connect_arrows(@edges)
-  
+
   handle_open_migration_click: (ev) =>
     ev.preventDefault()
-    
+
     target = $(ev.currentTarget)
     text = target.text()
-    
+
     m = target.parents('div.model')
     if m.hasClass('noclick')
       m.removeClass('noclick')
       return false
-    
+
     target.hide()
       .next('div')
       .show()
       .find('#close_migration')
       .show()
-      
-    
+
+
   handle_close_migration_click: (ev) =>
     ev.preventDefault()
-    
+
     target = $(ev.currentTarget)
     text = target.text()
-    
+
     m = target.parents('div.model')
     if m.hasClass('noclick')
       m.removeClass('noclick')
       return false
-    
+
     target.hide()
       .parent()
       .hide()
@@ -323,14 +323,14 @@ $ ->
   $('#erd').css('height', window.innerHeight)
   $(window).on 'resize', ->
     $('#erd').css('height', window.innerHeight)
-  
+
   $("#open_migration").click ->
     $('#close_migration').css('right', $('#migration').width() + ($(this).width() / 2) - 5)
-  
+
   $('#open_up').click ->
     $('#migration_status .up').addClass('open')
     $('#migration_status .down').removeClass('open')
-  
+
   $('#open_down').click ->
     $('#migration_status .down').addClass('open')
     $('#migration_status .up').removeClass('open')
