@@ -81,7 +81,9 @@ module Erd
       # node name x y width height label style shape color fillcolor
       models = plain.scan(/^node ([^ ]+) ([0-9\.]+) ([0-9\.]+) ([0-9\.]+) ([0-9\.]+) <\{?(<((?!^\}?>).)*)^\}?> [^ ]+ [^ ]+ [^ ]+ [^ ]+\n/m).map {|node_name, x, y, width, height, label|
         label_doc = Nokogiri::HTML::DocumentFragment.parse(label)
-        model_name = node_name.sub(/^m_/, '')
+        model_name = node_name.dup
+        model_name[0] = model_name[-1] = '' if (model_name.first == '"') && (model_name.last == '"')
+        model_name = model_name.sub(/^m_/, '')
         next if model_name == 'ActiveRecord::SchemaMigration'
         columns = []
         if (cols_table = label_doc.search('table')[1])
