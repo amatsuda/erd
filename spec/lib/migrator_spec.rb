@@ -9,14 +9,14 @@ describe Erd::Migrator do
   end
   describe '.status' do
     context 'when all migrations are up' do
-      its(:status) { should == [{:status => 'up', :version => '20120428022519', :name => 'create_authors'}, {:status => 'up', :version => '20120428022535', :name => 'create_books'}] }
+      its(:status) { should == [{:status => 'up', :version => '20120428022519', :name => 'create_authors', :filename => '20120428022519_create_authors.rb'}, {:status => 'up', :version => '20120428022535', :name => 'create_books', :filename => '20120428022535_create_books.rb'}] }
     end
 
     context 'when one is undone' do
       before do
         FileUtils.touch Rails.root.join('db/migrate/20999999999999_create_foobars.rb')
       end
-      its(:status) { should == [{:status => 'up', :version => '20120428022519', :name => 'create_authors'}, {:status => 'up', :version => '20120428022535', :name => 'create_books'}, {:status => 'down', :version => '20999999999999', :name => 'create_foobars'}] }
+      its(:status) { should == [{:status => 'up', :version => '20120428022519', :name => 'create_authors', :filename => '20120428022519_create_authors.rb'}, {:status => 'up', :version => '20120428022535', :name => 'create_books', :filename => '20120428022535_create_books.rb'}, {:status => 'down', :version => '20999999999999', :name => 'create_foobars', :filename => '20999999999999_create_foobars.rb'}] }
     end
   end
 
