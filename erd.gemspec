@@ -18,6 +18,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'rails-erd', ['>= 0.4.5']
   gem.add_runtime_dependency 'nokogiri'
 
+  gem.add_development_dependency 'rails', '>= 3.2'
   gem.add_development_dependency 'rspec-rails'
   gem.add_development_dependency 'capybara'
   gem.add_development_dependency 'rr'
