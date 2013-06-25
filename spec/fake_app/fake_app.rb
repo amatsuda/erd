@@ -18,6 +18,7 @@ module ErdApp
   end
 end
 ErdApp::Application.initialize!
+ErdApp::Application.routes.draw {}
 
 # models
 class Author < ActiveRecord::Base
