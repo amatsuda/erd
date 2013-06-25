@@ -89,11 +89,11 @@ module Erd
           columns = cols_table.search('tr > td').map {|col| col_name, col_type = col.text.split(' '); {:name => col_name, :type => col_type}}
         end
         custom_x, custom_y = positions[model_name.tableize].try(:split, ',')
-        {:model => model_name, :x => (custom_x || BigDecimal(x) * 72), :y => (custom_y || BigDecimal(y) * 72), :width => BigDecimal(width) * 72, :height => height, :columns => columns}
+        {:model => model_name, :x => (custom_x || (BigDecimal(x) * 72).round), :y => (custom_y || (BigDecimal(y) * 72).round), :width => (BigDecimal(width) * 72).round, :height => height, :columns => columns}
       }.compact
       # edge tail head n x1 y1 .. xn yn [label xl yl] style color
       edges = plain.scan(/^edge ([^ ]+)+ ([^ ]+)/).map {|from, to| {:from => from.sub(/^m_/, ''), :to => to.sub(/^m_/, '')}}
-      render_to_string 'erd/erd/erd', :layout => nil, :locals => {:width => BigDecimal(svg_width) * 72, :height => BigDecimal(svg_height) * 72, :models => models, :edges => edges}
+      render_to_string 'erd/erd/erd', :layout => nil, :locals => {:width => (BigDecimal(svg_width) * 72).round, :height => (BigDecimal(svg_height) * 72).round, :models => models, :edges => edges}
     end
 
     def gsub_file(path, flag, *args, &block)
