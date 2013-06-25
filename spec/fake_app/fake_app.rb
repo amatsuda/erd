@@ -12,6 +12,7 @@ module ErdApp
     config.secret_token = 'fall to your knees and repent if you please'
     config.session_store :cookie_store, :key => '_myapp_session'
     config.active_support.deprecation = :log
+    config.eager_load = false
 
     config.app_generators.orm :active_record, :migration => true, :timestamps => true
   end
