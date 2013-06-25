@@ -1,7 +1,6 @@
 require 'rails'
 require 'erd/engine'
 
-
 module Erd
   autoload :Migrator, 'erd/migrator'
 
