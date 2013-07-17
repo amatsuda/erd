@@ -288,7 +288,7 @@ class ERD
     ev.preventDefault()
     target = $(ev.currentTarget)
 
-    target.parent().siblings('table').append('<tr><td><input type="text" /></td><td>:</td><td><input type="text" value="string" /></td></tr>').find('tr:last > td > input:first').focus()
+    target.parent().siblings('table').append('<tr><td><input type="text" /></td><td class="separator">:</td><td><input type="text" value="string" /></td></tr>').find('tr:last > td > input:first').focus()
 
 
   handle_open_migration_click: (ev) =>
@@ -334,7 +334,10 @@ $ ->
     $('#erd').css('height', window.innerHeight)
 
   $("#open_migration").click ->
-    $('#close_migration').css('right', $('#migration').width() + ($(this).width() / 2) - 5)
+    $('#close_migration, #open_create_model_dialog').css('right', $('#migration').width() + ($(this).width() / 2) - 5)
+
+  $("#close_migration").click ->
+    $('#open_create_model_dialog').css('right', 15)
 
   $('#open_up').click ->
     $('#migration_status .up').addClass('open')
