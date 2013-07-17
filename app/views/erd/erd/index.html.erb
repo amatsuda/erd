@@ -67,7 +67,7 @@
       <%= submit_tag 'run migrations' %>
     <% end %>
   </div>
-  <div><br><br><br><br><a href="#" id='open_create_model_dialog'%>Create Model</a></div>
+  <a href="#" id='open_create_model_dialog'%>Create Model</a>
   <div id="create_model_form">
     <form>
       Model Name: <input id="new_model_name" name="new_model_name" type="text" /><br>
@@ -75,12 +75,12 @@
         <tbody>
           <tr>
             <td><input name="new_model_column_name_1" type="text" /></td>
-            <td>:</td>
+            <td class="separator">:</td>
             <td><input name="new_model_column_type_1" type="text" value="string" /></td>
           </tr>
         </tbody>
       </table>
-      <div><a href="#" id="new_model_add_column">Add More Column</a></div>
+      <div><a href="#" id="new_model_add_column" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Add More Column</span></a></div>
     </form>
   </div>
 </div>
