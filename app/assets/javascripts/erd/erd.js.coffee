@@ -275,8 +275,8 @@ class ERD
 
     return unless confirm('remove this table?')
 
-    model_name = parent.data('model_name')
-    upsert_change 'remove_model', model_name, '', '', ''
+    model_name = m.data('model_name')
+    window.erd.upsert_change 'remove_model', model_name, '', '', ''
     parent.hide()
 
     $.each @edges, (i, edge) =>
