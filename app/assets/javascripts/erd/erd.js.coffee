@@ -288,7 +288,7 @@ class ERD
     ev.preventDefault()
     target = $(ev.currentTarget)
 
-    target.parent().siblings('table').append('<tr><td><input type="text" /></td><td>:</td><td><input type="text" value="string" /></td></tr>')
+    target.parent().siblings('table').append('<tr><td><input type="text" /></td><td>:</td><td><input type="text" value="string" /></td></tr>').find('tr:last > td > input:first').focus()
 
 
   handle_open_migration_click: (ev) =>
