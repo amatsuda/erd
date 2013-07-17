@@ -92,6 +92,8 @@ class ERD
     $('div.model a.add_column').on 'click', @handle_add_column_click
     $('div.model a.cancel').on 'click', @handle_cancel_click
     $('div.model a.close').on 'click', @handle_remove_model_click
+    $('#new_model_add_column').on 'click', @handle_new_model_add_column_click
+    $('div.model a.cancel').on 'click', @handle_cancel_click
     $('div#open_migration').on 'click', @handle_open_migration_click
     $('div#close_migration').on 'click', @handle_close_migration_click
 
@@ -282,6 +284,13 @@ class ERD
     @paper.clear()
     @connect_arrows(@edges)
 
+  handle_new_model_add_column_click: (ev) =>
+    ev.preventDefault()
+    target = $(ev.currentTarget)
+
+    target.parent().siblings('table').append('<tr><td><input type="text" /></td><td>:</td><td><input type="text" value="string" /></td></tr>')
+
+
   handle_open_migration_click: (ev) =>
     ev.preventDefault()
 
@@ -337,3 +346,29 @@ $ ->
 
   $('#close_all').click ->
     $('#migration_status tr').removeClass('open')
+
+  $('#create_model_form').dialog
+    autoOpen: false,
+    height: 450,
+    width: 450,
+    modal: true,
+    buttons:
+      'Create Model': ->
+        model = $('#new_model_name').val()
+        columns = ''
+        $('#create_model_table > tbody > tr').each (i, row) ->
+          [name, type] = $(row).find('input')
+          columns += "#{$(name).val()}:#{$(type).val()} "
+        window.erd.upsert_change 'create_model', model, columns, '', ''
+        $(this).find('table > tbody > tr').each (i, row) ->
+          row.remove() if i >= 1
+        $(this).find('input').val('')
+        $(this).find('input[name=new_model_column_type_1]').val('string')
+
+        $(this).dialog('close')
+      Cancel: ->
+        $(this).dialog('close')
+
+  $('#open_create_model_dialog').click (ev) ->
+    ev.preventDefault()
+    $('#create_model_form').dialog('open')

@@ -67,4 +67,20 @@
       <%= submit_tag 'run migrations' %>
     <% end %>
   </div>
+  <div><br><br><br><br><a href="#" id='open_create_model_dialog'%>Create Model</a></div>
+  <div id="create_model_form">
+    <form>
+      Model Name: <input id="new_model_name" name="new_model_name" type="text" /><br>
+      <table id="create_model_table">
+        <tbody>
+          <tr>
+            <td><input name="new_model_column_name_1" type="text" /></td>
+            <td>:</td>
+            <td><input name="new_model_column_type_1" type="text" value="string" /></td>
+          </tr>
+        </tbody>
+      </table>
+      <div><a href="#" id="new_model_add_column">Add More Column</a></div>
+    </form>
+  </div>
 </div>
