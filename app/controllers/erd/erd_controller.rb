@@ -26,6 +26,11 @@ module Erd
         begin
           action, model, column, from, to = row['action'], row['model'].tableize, row['column'], row['from'], row['to']
           case action
+          when 'create_model'
+            columns = column.split(' ').compact
+            generated_migration_file = Erd::Migrator.execute_generate_model model, columns
+            Erd::Migrator.run_migrations :up => generated_migration_file
+            executed_migrations << generated_migration_file
           when 'remove_model'
             generated_migration_file = Erd::Migrator.execute_generate_migration "drop_#{model}"
             gsub_file generated_migration_file, /def (up|change).*  end/m, "def change\n    drop_table :#{model}\n  end"
