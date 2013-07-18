@@ -535,3 +535,55 @@ li {
 #model_name_changes, #column_name_changes {
   display: none;
 }
+
+#open_create_model_dialog {
+  position: fixed;
+  right: 15px;
+  top: 70px;
+  background: rgba(0, 0, 0, .6);
+  padding: 12px 20px;
+  color: $white;
+  text-decoration: none;
+  font-size: 13px;
+  &:hover {
+    background: rgba(0, 0, 0, .8)
+  }
+}
+
+#create_model_form {
+  font-size: 14px;
+}
+#create_model_table {
+  margin: 12px auto;
+  border-spacing: 0;
+  width: 100%;
+  tr {
+    &:nth-child(odd) {
+      td {
+        background: #f8f8f8;
+      }
+    }
+    &:nth-child(even) {
+      td {
+        background: #eee;
+      }
+    }
+    td {
+      padding: 6px 12px;
+      input {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      &.separator {
+        padding: 6px 0;
+      }
+    }
+  }
+}
+#new_model_add_column {
+  margin: 10px auto 0;
+  display: block;
+  width: 160px;
+  padding: 2px 10px;
+  text-decoration: none;
+}
