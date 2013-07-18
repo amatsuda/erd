@@ -101,7 +101,7 @@ module Erd
         end
         custom_x, custom_y = positions[model_name.tableize].try(:split, ',')
         h = {:model => model_name, :x => (custom_x || (BigDecimal(x) * 72).round), :y => (custom_y || (BigDecimal(y) * 72).round), :width => (BigDecimal(width) * 72).round, :height => height, :columns => columns}
-        max_model_x, max_model_y = [h[:x].to_i + h[:width].to_i, max_model_x].max, [h[:y].to_i + h[:height].to_i, max_model_y].max
+        max_model_x, max_model_y = [h[:x].to_i + h[:width].to_i, max_model_x, 1024].max, [h[:y].to_i + h[:height].to_i, max_model_y, 768].max
         h
       }.compact
       # edge tail head n x1 y1 .. xn yn [label xl yl] style color
