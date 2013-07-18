@@ -30,7 +30,7 @@ Browse at your http://localhost:3000/erd
 
 * You can drag and arrange the positions of each model
 
-* You can operate DB schema manipulations such as `add column`, `rename column`, `alter column`, and `drop table`
+* You can operate DB schema manipulations such as `add column`, `rename column`, `alter column`, `create model (as well as table)`, and `drop table`
 
 * Then, Erd generates migration files on the server
 
@@ -39,11 +39,7 @@ Browse at your http://localhost:3000/erd
 
 == TODO
 
-* Better UI
-
 * Fix buggy JS
-
-* create table (we need to generate AR model file at the same time)
 
 * drop column (need to think of the UI)
 
@@ -57,6 +53,12 @@ Browse at your http://localhost:3000/erd
 == Contributing to Erd
 
 * Send me your pull requests!
+
+
+=- Team
+
+* {Akira Matsuda}[https://github.com/amatsuda]
+* {Teppei Machida}[http://github.com/machida] (design)
 
 
 == Copyright
