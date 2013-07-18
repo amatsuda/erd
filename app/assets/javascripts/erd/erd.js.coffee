@@ -360,8 +360,8 @@ $ ->
         model = $('#new_model_name').val()
         columns = ''
         $('#create_model_table > tbody > tr').each (i, row) ->
-          [name, type] = $(row).find('input')
-          columns += "#{$(name).val()}:#{$(type).val()} "
+          [name, type] = ($(v).val() for v in $(row).find('input'))
+          columns += "#{name}#{if type then ":#{type}" else ''} " if name
         window.erd.upsert_change 'create_model', model, columns, '', ''
         $(this).find('table > tbody > tr').each (i, row) ->
           row.remove() if i >= 1
