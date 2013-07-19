@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem.description   = 'erd engine on Rails'
   gem.summary       = 'erd engine on Rails'
   gem.homepage      = 'https://github.com/amatsuda/erd'
-  spec.license      = 'MIT'
+  gem.license       = 'MIT'
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
