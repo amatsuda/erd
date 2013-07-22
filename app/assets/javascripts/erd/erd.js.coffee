@@ -138,20 +138,14 @@ class ERD
     type_span = $("<span/>", class: 'column_type_text unsaved')
       .append(type)
 
-    li_node = $("<li/>", class: 'column unsaved')
-      .append(name_span)
-      .append("&nbsp;")
-      .append(type_span)
+    li_node = $("<li/>", class: 'column unsaved').append(name_span).append("&nbsp;").append(type_span)
 
     target.hide()
       .parent()
       .siblings('.columns')
-      .find('ul')
-      .append(li_node)
+      .find('ul').append(li_node).end()
       .end()
-      .end()
-      .find('a.add_column')
-      .show()
+      .find('a.add_column').show()
 
   handle_change_column_type: (ev) =>
     ev.preventDefault()
@@ -166,12 +160,8 @@ class ERD
       @upsert_change 'alter_column', model, column, type, to
 
     target.hide()
-      .siblings('.column_type_text')
-      .text(to)
-      .show()
-      .addClass('unsaved')
-      .parents('.column')
-      .addClass('unsaved')
+      .siblings('.column_type_text').text(to).show().addClass('unsaved')
+      .parents('.column').addClass('unsaved')
 
   handle_rename_column: (ev) =>
     ev.preventDefault()
@@ -185,11 +175,8 @@ class ERD
       @upsert_change 'rename_column', model, column, column, to
 
     target.hide()
-      .siblings('.column_name_text')
-      .text(to)
-      .show()
-      .parents('.column')
-      .addClass('unsaved')
+      .siblings('.column_name_text').text(to).show()
+      .parents('.column').addClass('unsaved')
 
   handle_rename_model: (ev) =>
     ev.preventDefault()
@@ -202,10 +189,7 @@ class ERD
       @upsert_change 'rename_model', model, '', model, to
 
     target.hide()
-      .siblings('.model_name_text')
-      .text(to)
-      .show()
-      .addClass('unsaved')
+      .siblings('.model_name_text').text(to).show().addClass('unsaved')
 
   handle_add_column_click: (ev) =>
     ev.preventDefault()
@@ -217,17 +201,10 @@ class ERD
       return false
 
     target.hide()
-      .next('form')
-      .show()
-      .find('a.cancel')
-      .show()
-      .end()
-      .find('input[name=type]')
-      .val('string')
-      .end()
-      .find('input[name=name]')
-      .val('')
-      .focus()
+      .next('form').show()
+      .find('a.cancel').show().end()
+      .find('input[name=type]').val('string').end()
+      .find('input[name=name]').val('').focus()
 
   handle_cancel_click: (ev) =>
     ev.preventDefault()
@@ -239,10 +216,8 @@ class ERD
       return false
 
     target.hide()
-      .parent('form')
-      .hide()
-      .prev('a.add_column, span, div')
-      .show()
+      .parent('form').hide()
+      .prev('a.add_column, span, div').show()
 
 
   handle_text_elem_click: (ev) =>
@@ -255,14 +230,9 @@ class ERD
       return false
 
     target.hide()
-      .next('form')
-      .show()
-      .find('a.cancel')
-      .show()
-      .end()
-      .find('input[name=to]')
-      .val(text)
-      .focus()
+      .next('form').show()
+      .find('a.cancel').show().end()
+      .find('input[name=to]').val(text).focus()
 
   handle_remove_model_click: (ev) =>
     ev.preventDefault()
@@ -305,10 +275,8 @@ class ERD
       return false
 
     target.hide()
-      .next('div')
-      .show()
-      .find('#close_migration')
-      .show()
+      .next('div').show()
+      .find('#close_migration').show()
 
 
   handle_close_migration_click: (ev) =>
@@ -323,10 +291,8 @@ class ERD
       return false
 
     target.hide()
-      .parent()
-      .hide()
-      .prev('div')
-      .show()
+      .parent().hide()
+      .prev('div').show()
 
 $ ->
   window.erd = new ERD('erd', $('#erd'), window.raw_edges)
