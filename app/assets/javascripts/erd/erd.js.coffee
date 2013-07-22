@@ -221,6 +221,7 @@ class ERD
       .show()
       .find('a.cancel')
       .show()
+      .end()
       .find('input[name=type]')
       .val('string')
       .end()
