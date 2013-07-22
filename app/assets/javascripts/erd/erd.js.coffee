@@ -259,6 +259,7 @@ class ERD
       .show()
       .find('a.cancel')
       .show()
+      .end()
       .find('input[name=to]')
       .val(text)
       .focus()
