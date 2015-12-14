@@ -1,6 +1,6 @@
 class ERD
   constructor: (@name, @elem, @edges) ->
-    @paper = Raphael(name, @elem.data('svg_width'), @elem.data('svg_height'))
+    @paper = Raphael(@name, @elem.data('svg_width'), @elem.data('svg_height'))
     @setup_handlers()
     models = @elem.find('.model')
     @models = {}
