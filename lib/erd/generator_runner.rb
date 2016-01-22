@@ -1,3 +1,5 @@
+require 'rails/generators'
+
 module Erd
   class GenaratorRunner
     class << self
