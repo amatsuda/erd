@@ -14,7 +14,7 @@ describe Erd::Migrator do
 
     context 'when one is undone' do
       before do
-        FileUtils.touch Rails.root.join('db/migrate/20999999999999_create_foobars.rb')
+        File.open(Rails.root.join('db/migrate/20999999999999_create_foobars.rb'), 'w') {|f| f.write 'class CreateFooBars; end'}
       end
       its(:status) { should == [{:status => 'up', :version => '20120428022519', :name => 'create_authors', :filename => '20120428022519_create_authors.rb'}, {:status => 'up', :version => '20120428022535', :name => 'create_books', :filename => '20120428022535_create_books.rb'}, {:status => 'down', :version => '20999999999999', :name => 'create_foobars', :filename => '20999999999999_create_foobars.rb'}] }
     end
@@ -22,7 +22,7 @@ describe Erd::Migrator do
 
   describe '.run_migrations' do
     before do
-      FileUtils.touch Rails.root.join('db/migrate/20999999999999_create_foobars.rb')
+      File.open(Rails.root.join('db/migrate/20999999999999_create_foobars.rb'), 'w') {|f| f.write 'class CreateFooBars; end'}
       mock(ActiveRecord::Migrator).run(:up, 'db/migrate', 20999999999999)
       mock(ActiveRecord::SchemaDumper).dump(ActiveRecord::Base.connection, anything)
     end
