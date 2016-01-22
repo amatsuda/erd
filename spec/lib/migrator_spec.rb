@@ -48,7 +48,7 @@ describe Erd::GenaratorRunner do
       stub.proxy(Time).now {|t| stub(t).utc { Time.new 2012, 5, 12, 13, 26 } }
     end
     specify do
-      subject.execute_generate_migration('create_foobars').should eq Rails.root.join('db/migrate', '20120512132600_create_foobars.rb').to_s
+      subject.execute_generate_migration('create_foobars').should include 'db/migrate/20120512132600_create_foobars.rb'
     end
   end
 end
