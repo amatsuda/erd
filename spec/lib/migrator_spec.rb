@@ -33,6 +33,15 @@ describe Erd::Migrator do
       subject.run_migrations(:up => [Rails.root.join('db/migrate/20999999999999_create_foobars.rb')])
     end
   end
+end
+
+describe Erd::GenaratorRunner do
+  subject { Erd::GenaratorRunner }
+  after do
+    Dir.glob(Rails.root.join('db/migrate/*.rb')).each do |f|
+      FileUtils.rm f unless File.basename(f).in? %w(20120428022519_create_authors.rb 20120428022535_create_books.rb)
+    end
+  end
 
   describe '.execute_generate_migration' do
     before do
