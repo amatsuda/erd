@@ -5,7 +5,7 @@ A Rails engine for drawing your app's ER diagram and operating migrations
 
 == Requirements
 
-* Rails 4.0, 3.2, or 3.1
+* Rails 4.2, 4.1, 4.0, 3.2, or 3.1
 
 * Graphviz
 
