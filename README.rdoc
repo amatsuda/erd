@@ -55,7 +55,7 @@ Browse at your http://localhost:3000/erd
 * Send me your pull requests!
 
 
-=- Team
+== Team
 
 * {Akira Matsuda}[https://github.com/amatsuda]
 * {Teppei Machida}[http://github.com/machida] (design)
