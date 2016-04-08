@@ -2,3 +2,6 @@ language: ruby
 
 rvm:
   - 2.3.0
+
+before_install:
+ - sudo apt-get install graphviz
