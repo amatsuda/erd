@@ -23,6 +23,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'test-unit-rails'
   gem.add_development_dependency 'capybara', '>= 2'
+  gem.add_development_dependency 'poltergeist'
   gem.add_development_dependency 'rr'
   gem.add_development_dependency 'sqlite3'
 end
