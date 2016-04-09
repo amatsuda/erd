@@ -2,7 +2,7 @@ require 'active_record'
 require 'action_controller/railtie'
 
 # config
-ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => ':memory:')
+ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => "#{__dir__}/test.sqlite3")
 
 module ErdApp
   class Application < Rails::Application

@@ -7,5 +7,8 @@ require 'fake_app/fake_app'
 require 'test/unit/rails/test_help'
 Bundler.require
 
+require 'capybara/poltergeist'
+Capybara.default_driver = Capybara.javascript_driver = :poltergeist
+
 ActiveRecord::Migration.verbose = false
 ActiveRecord::Migrator.migrate(ActiveRecord::Migrator.migrations_paths.map {|p| Rails.root.join p}, nil)
