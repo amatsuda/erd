@@ -22,7 +22,7 @@ class MigratorTest < ActiveSupport::TestCase
   sub_test_case '.run_migrations' do
     setup do
       FileUtils.touch Rails.root.join('db/migrate/20999999999999_create_foobars.rb')
-      mock(ActiveRecord::Migrator).run(:up, 'db/migrate', 20999999999999)
+      mock(ActiveRecord::Migrator).run(:up, ['db/migrate'], 20999999999999)
       mock(ActiveRecord::SchemaDumper).dump(ActiveRecord::Base.connection, anything)
     end
     test 'runs migration by version number' do
