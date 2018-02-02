@@ -536,10 +536,18 @@ li {
   display: none;
 }
 
+#open_visualization_dialog {
+  top: 70px;
+}
+
 #open_create_model_dialog {
+  top: 120px;
+}
+
+.sliding-buttons {
   position: fixed;
   right: 15px;
-  top: 70px;
+  top: 120px;
   background: rgba(0, 0, 0, .6);
   padding: 12px 20px;
   color: $white;
@@ -548,6 +556,7 @@ li {
   &:hover {
     background: rgba(0, 0, 0, .8)
   }
+  z-index: 5;
 }
 
 #create_model_form {
@@ -586,4 +595,27 @@ li {
   width: 160px;
   padding: 2px 10px;
   text-decoration: none;
+}
+
+#erd_box.edit-mode {
+  .add_column_box {
+    display: none;
+  }
+
+  a.close {
+    display: none;
+  }
+
+  #erd {
+    background-color: #fff;
+    background-image: none;
+  }
+}
+
+.columns.hidden {
+  display: none;
+}
+
+.model.hidden {
+  display: none;
 }
