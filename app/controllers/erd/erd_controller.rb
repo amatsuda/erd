@@ -81,7 +81,7 @@ module Erd
       _scale, svg_width, svg_height = plain.scan(/\Agraph ([0-9\.]+) ([0-9\.]+) ([0-9\.]+)$/).first
       # node name x y width height label style shape color fillcolor
       max_model_x, max_model_y = 0, 0
-      models = plain.scan(/^node ([^ ]+) ([0-9\.]+) ([0-9\.]+) ([0-9\.]+) ([0-9\.]+) <\{?(<((?!^\}?>).)*)^\}?> [^ ]+ [^ ]+ [^ ]+ [^ ]+\n/m).map {|node_name, x, y, width, height, label|
+      @models = plain.scan(/^node ([^ ]+) ([0-9\.]+) ([0-9\.]+) ([0-9\.]+) ([0-9\.]+) <\{?(<((?!^\}?>).)*)^\}?> [^ ]+ [^ ]+ [^ ]+ [^ ]+\n/m).map {|node_name, x, y, width, height, label|
         label_doc = Nokogiri::HTML::DocumentFragment.parse(label)
         model_name = node_name.dup
         model_name[0] = model_name[-1] = '' if (model_name.first == '"') && (model_name.last == '"')
@@ -98,7 +98,7 @@ module Erd
       }.compact
       # edge tail head n x1 y1 .. xn yn [label xl yl] style color
       edges = plain.scan(/^edge ([^ ]+)+ ([^ ]+)/).map {|from, to| {:from => from.sub(/^m_/, ''), :to => to.sub(/^m_/, '')}}
-      render_to_string 'erd/erd/erd', :layout => nil, :locals => {:width => [(BigDecimal(svg_width) * 72).round, max_model_x].max, :height => [(BigDecimal(svg_height) * 72).round, max_model_y].max, :models => models, :edges => edges}
+      render_to_string 'erd/erd/erd', :layout => nil, :locals => {:width => [(BigDecimal(svg_width) * 72).round, max_model_x].max, :height => [(BigDecimal(svg_height) * 72).round, max_model_y].max, :models => @models, :edges => edges}
     end
 
     def gsub_file(path, flag, *args, &block)

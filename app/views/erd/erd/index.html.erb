@@ -67,7 +67,37 @@
       <%= submit_tag 'run migrations' %>
     <% end %>
   </div>
-  <a href="#" id='open_create_model_dialog'%>Create Model</a>
+  <a href="#" id='open_visualization_dialog' class="sliding-buttons">Visualization</a>
+  <div id='visualization_form'>
+    <form>
+      Edit Mode:
+      <input type="checkbox" id="edit_mode">
+      Show Columns:
+      <input type="checkbox" id="show_columns" checked>
+    </form>
+    <form>
+      <table id="models_visibility_table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Visible?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>All</strong></td>
+            <td><input type="checkbox" id="toggle_all_models_visibility" checked></td>
+          <% @models.each do |element| %>
+            <tr>
+              <td><%= element[:model] %></td>
+              <td><input type="checkbox" id="toggle_<%= element[:model].downcase %>_visibility" class="toggle_model_visibility" value="<%= element[:model] %>" checked></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </form>
+  </div>
+  <a href="#" id='open_create_model_dialog' class="sliding-buttons">Create Model</a>
   <div id="create_model_form">
     <form>
       Model Name: <input id="new_model_name" name="new_model_name" type="text" /><br>
