@@ -6,7 +6,8 @@ module Erd
   class Migrator
     class << self
       def status
-        migrated_versions = ActiveRecord::Base.connection.select_values("SELECT version FROM #{ActiveRecord::Migrator.schema_migrations_table_name}").map {|v| '%.3d' % v}
+        table_name = Rails.version.to_f > 5.0 ? ActiveRecord::SchemaMigration.table_name : ActiveRecord::Migrator.schema_migrations_table_name
+        migrated_versions = ActiveRecord::Base.connection.select_values("SELECT version FROM #{table_name}").map {|v| '%.3d' % v}
         migrations = []
         ActiveRecord::Migrator.migrations_paths.each do |path|
           Dir.foreach(Rails.root.join(path)) do |file|
