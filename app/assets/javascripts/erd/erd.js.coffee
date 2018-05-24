@@ -2,11 +2,63 @@ class ERD
   constructor: (@name, @elem, @edges) ->
     @paper = Raphael(@name, @elem.data('svg_width'), @elem.data('svg_height'))
     @setup_handlers()
-    models = @elem.find('.model')
+    @hidden_models = []
+    @hidden_edges = []
     @models = {}
-    for model in models
+    for model in @elem.find('.model')
       @models[$(model).data('model_name')] = model
     @connect_arrows(@edges)
+
+  redraw: ->
+    @connect_arrows(@edges)
+
+  toggle_all_models_visibility: ->
+    if @hidden_models.length == 0
+      @hide_all_models()
+    else
+      @show_all_models()
+    @paper.clear()
+    @connect_arrows(@edges)
+
+  hide_all_models: ->
+    Array::push.apply @hidden_edges, @edges
+    @edges = []
+    @hidden_models = Object.keys(@models)
+
+  show_all_models: ->
+    Array::push.apply @edges, @hidden_edges
+    @hidden_edges = []
+    @hidden_models = []
+
+  toggle_model_visibility: (model_name) ->
+    if model_name in @hidden_models
+      @show_model(model_name)
+    else
+      @hide_model(model_name)
+
+    @paper.clear()
+    @connect_arrows(@edges)
+
+
+  hide_model: (model_name) ->
+    @hidden_models.push(model_name)
+    hidden_edges = []
+    for edge, i in @edges
+      idx = i - hidden_edges.length
+      curr_edge = @edges[idx]
+      if (curr_edge.from == model_name) || (curr_edge.to == model_name)
+        hidden_edges.push @edges.splice(idx, 1)[0]
+    Array::push.apply @hidden_edges, hidden_edges
+
+  show_model: (model_name) ->
+    @hidden_models.splice(@hidden_models.indexOf(model_name), 1)
+    showing_edges = []
+    for edge, i in @hidden_edges
+      idx = i - showing_edges.length
+      curr_edge = @hidden_edges[idx]
+      if curr_edge.from == model_name && @hidden_models.indexOf(curr_edge.to) == -1 || curr_edge.to == model_name && @hidden_models.indexOf(curr_edge.from) == -1
+        showing_edges.push @hidden_edges.splice(idx, 1)[0]
+    Array::push.apply @edges, showing_edges
 
   upsert_change: (action, model, column, from, to) ->
     rows = ($(tr).find('td') for tr in $('#changes > tbody > tr'))
@@ -302,10 +354,10 @@ $ ->
     $('#erd').css('height', window.innerHeight)
 
   $("#open_migration").click ->
-    $('#close_migration, #open_create_model_dialog').css('right', $('#migration').width() + ($(this).width() / 2) - 5)
+    $('#close_migration, #open_create_model_dialog, #open_visualization_dialog').css('right', $('#migration').width() + ($(this).width() / 2) - 5)
 
   $("#close_migration").click ->
-    $('#open_create_model_dialog').css('right', 15)
+    $('#open_create_model_dialog, #open_visualization_dialog').css('right', 15)
 
   $('#open_up').click ->
     $('#migration_status .up').addClass('open')
@@ -317,6 +369,35 @@ $ ->
 
   $('#close_all').click ->
     $('#migration_status tr').removeClass('open')
+
+  $('#edit_mode').click ->
+    $('#erd_box').toggleClass('edit-mode')
+    window.erd.redraw()
+
+  $('#show_columns').click ->
+    $('.columns').toggleClass('hidden')
+    window.erd.redraw()
+
+  $('.toggle_model_visibility').click ->
+    model_name = this.value
+    window.erd.toggle_model_visibility model_name
+    $('#toggle_all_models_visibility').prop('checked', ($(this).is(':checked') && window.erd.hidden_models.length == 0))
+    $('#erd-' + model_name).toggleClass('hidden');
+
+  $('#toggle_all_models_visibility').click ->
+    window.erd.toggle_all_models_visibility()
+    $('.model').toggleClass('hidden', !$(this).is(':checked'))
+    $('.toggle_model_visibility').prop('checked', $(this).is(':checked'))
+
+  $('#visualization_form').dialog
+    autoOpen: false,
+    height: 450,
+    width: 450,
+    modal: true
+
+  $('#open_visualization_dialog').click (ev) ->
+    ev.preventDefault()
+    $('#visualization_form').dialog('open')
 
   $('#create_model_form').dialog
     autoOpen: false,
