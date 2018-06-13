@@ -31,7 +31,7 @@ module Erd
             /^(?<version>\d{3,})/ =~ File.basename(version_or_filename)
 
             if defined? ActiveRecord::MigrationContext  # >= 5.2
-              ActiveRecord::MigrationContext.new(ActiveRecord::Migrator.migrations_paths).run(direction, version.to_i)
+              ActiveRecord::Base.connection.migration_context.run(direction, version.to_i)
             else
               ActiveRecord::Migrator.run(direction, ActiveRecord::Migrator.migrations_paths, version.to_i)
             end
