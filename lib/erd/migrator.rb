@@ -29,7 +29,12 @@ module Erd
         migrations.each do |direction, version_or_filenames|
           Array.wrap(version_or_filenames).each do |version_or_filename|
             /^(?<version>\d{3,})/ =~ File.basename(version_or_filename)
-            ActiveRecord::Migrator.run(direction, ActiveRecord::Migrator.migrations_paths, version.to_i)
+
+            if defined? ActiveRecord::MigrationContext  # >= 5.2
+              ActiveRecord::MigrationContext.new(ActiveRecord::Migrator.migrations_paths).run(direction, version.to_i)
+            else
+              ActiveRecord::Migrator.run(direction, ActiveRecord::Migrator.migrations_paths, version.to_i)
+            end
           end if version_or_filenames
         end
         if ActiveRecord::Base.schema_format == :ruby
