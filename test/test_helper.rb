@@ -9,4 +9,8 @@ require 'test/unit/rails/test_help'
 Bundler.require
 
 ActiveRecord::Migration.verbose = false
-ActiveRecord::Migrator.migrate(ActiveRecord::Migrator.migrations_paths.map {|p| Rails.root.join p}, nil)
+if defined? ActiveRecord::MigrationContext  # >= 5.2
+  ActiveRecord::Base.connection.migration_context.migrate
+else
+  ActiveRecord::Migrator.migrate(ActiveRecord::Migrator.migrations_paths.map {|p| Rails.root.join p}, nil)
+end
