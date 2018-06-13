@@ -20,11 +20,13 @@ module Erd
       private
       # a dirty workaround to make rspec-rails run
       def overwriting_argv(value, &block)
-        original_argv = ARGV
-        Object.const_set :ARGV, value
+        original_argv = ARGV.dup
+        ARGV.clear
+        ARGV.concat value
         block.call
       ensure
-        Object.const_set :ARGV, original_argv
+        ARGV.clear
+        ARGV.concat original_argv
       end
 
       def execute_generator(type, name, options = nil)
