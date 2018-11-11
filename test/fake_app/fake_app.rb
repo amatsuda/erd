@@ -2,8 +2,6 @@ require 'active_record'
 require 'action_controller/railtie'
 
 # config
-ENV["DATABASE_URL"] = 'sqlite3::memory:'
-
 module ErdApp
   class Application < Rails::Application
     # Rais.root
