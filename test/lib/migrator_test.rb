@@ -45,6 +45,6 @@ class GenaratorRunnerTest < ActiveSupport::TestCase
   end
 
   test '.execute_generate_migration' do
-    assert_includes 'db/migrate/20120512132600_create_foobars.rb', Erd::GenaratorRunner.execute_generate_migration('create_foobars')
+    assert_includes Erd::GenaratorRunner.execute_generate_migration('create_foobars'), 'db/migrate/20120512132600_create_foobars.rb'
   end
 end
