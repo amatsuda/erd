@@ -28,4 +28,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'capybara', '>= 2'
   gem.add_development_dependency 'rr'
   gem.add_development_dependency 'sqlite3'
+  gem.add_development_dependency 'selenium-webdriver'
+  gem.add_development_dependency 'puma'
 end
