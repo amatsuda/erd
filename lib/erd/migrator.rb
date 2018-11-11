@@ -29,7 +29,7 @@ module Erd
       def run_migrations(migrations)
         migrations.each do |direction, version_or_filenames|
           Array.wrap(version_or_filenames).each do |version_or_filename|
-            /^(?<version>\d{3,})/ =~ File.basename(version_or_filename)
+            version = File.basename(version_or_filename)[/\d{3,}/]
 
             if defined? ActiveRecord::MigrationContext  # >= 5.2
               ActiveRecord::Base.connection.migration_context.run(direction, version.to_i)
