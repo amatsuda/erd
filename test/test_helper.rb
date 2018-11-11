@@ -1,7 +1,7 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
-ENV['RAILS_ENV'] ||= 'development'
+ENV['RAILS_ENV'] = 'development'
 
 # load Rails first
 require 'rails'
