@@ -19,12 +19,12 @@ begin
   require "action_dispatch/system_test_case"
 rescue LoadError
   Capybara.register_driver :chrome do |app|
-    options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox headless disable-gpu])
-    Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+    options = Selenium::WebDriver::Chrome::Options.new(:args => %w[no-sandbox headless disable-gpu])
+    Capybara::Selenium::Driver.new(app, :browser => :chrome, :options => options)
   end
   Capybara.javascript_driver = :chrome
 else
-  ActionDispatch::SystemTestCase.driven_by(:selenium, using: :headless_chrome)
+  ActionDispatch::SystemTestCase.driven_by(:selenium, :using => :headless_chrome)
 end
 
 ActiveRecord::Migration.verbose = false
