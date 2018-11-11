@@ -13,6 +13,7 @@ Bundler.require
 
 ActiveRecord::Migration.verbose = false
 if defined? ActiveRecord::MigrationContext  # >= 5.2
+  ActiveRecord::Migrator.migrations_paths = Rails.application.paths['db/migrate'].to_a
   ActiveRecord::Base.connection.migration_context.migrate
 else
   ActiveRecord::Migrator.migrate(ActiveRecord::Migrator.migrations_paths.map {|p| Rails.root.join p}, nil)
