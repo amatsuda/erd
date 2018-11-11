@@ -22,7 +22,12 @@ class MigratorTest < ActiveSupport::TestCase
   sub_test_case '.run_migrations' do
     setup do
       File.write Rails.root.join('db/migrate/20999999999999_create_foobars.rb'), 'class CreateFoobars < ActiveRecord::VERSION::MAJOR >= 5 ? ActiveRecord::Migration[5.0] : ActiveRecord::Migration; end'
-      mock(ActiveRecord::Migrator).run(:up, ['db/migrate'], 20999999999999)
+
+      if defined? ActiveRecord::MigrationContext  # >= 5.2
+        mock.instance_of(ActiveRecord::MigrationContext).run(:up, 20999999999999)
+      else
+        mock(ActiveRecord::Migrator).run(:up, ['db/migrate'], 20999999999999)
+      end
       mock(ActiveRecord::SchemaDumper).dump(ActiveRecord::Base.connection, anything)
     end
     test 'runs migration by version number' do
