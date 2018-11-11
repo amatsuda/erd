@@ -6,6 +6,5 @@ class CreateBooks < ActiveRecord::VERSION::MAJOR >= 5 ? ActiveRecord::Migration[
 
       t.timestamps
     end
-    add_index :books, :author_id
   end
 end
