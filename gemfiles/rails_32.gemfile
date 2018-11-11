@@ -10,3 +10,5 @@ gem 'capybara', '~> 2.0.0'
 gem 'rubyzip', '0.9.9' if RUBY_VERSION < '1.9'
 
 gem 'test-unit-rails', '1.0.2'
+gem 'test-unit', '< 3.1'
+gem 'rails-erd', '< 1.2'
