@@ -6,9 +6,17 @@ addons:
   apt:
     packages:
       - graphviz
+  chrome: stable
+
 cache:
   - apt
   - bundler
+
+before_install:
+  - sudo apt update -qq
+  - sudo apt install -y chromium-chromedriver
+  - sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/
+  - gem install bundler
 
 rvm:
   - 2.4.1
