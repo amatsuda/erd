@@ -19,4 +19,31 @@ before_install:
   - gem install bundler
 
 rvm:
-  - 2.4.1
+  - 2.5.3
+  - 2.0.0
+
+gemfile:
+  - gemfiles/rails_52.gemfile
+  - gemfiles/rails_51.gemfile
+  - gemfiles/rails_50.gemfile
+  - gemfiles/rails_42.gemfile
+  - gemfiles/rails_41.gemfile
+  - gemfiles/rails_40.gemfile
+  - gemfiles/rails_32.gemfile
+
+matrix:
+  exclude:
+    - rvm: 2.0.0
+      gemfile: gemfiles/rails_52.gemfile
+    - rvm: 2.0.0
+      gemfile: gemfiles/rails_51.gemfile
+    - rvm: 2.0.0
+      gemfile: gemfiles/rails_50.gemfile
+    - rvm: 2.5.3
+      gemfile: gemfiles/rails_42.gemfile
+    - rvm: 2.5.3
+      gemfile: gemfiles/rails_41.gemfile
+    - rvm: 2.5.3
+      gemfile: gemfiles/rails_40.gemfile
+    - rvm: 2.5.3
+      gemfile: gemfiles/rails_32.gemfile
