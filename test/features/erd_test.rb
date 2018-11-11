@@ -4,7 +4,11 @@ class ErdIndexTest < ActionDispatch::IntegrationTest
   test 'with author and book model' do
     visit '/erd'
 
-    assert has_content? 'Author', :minimum => 1
+    if Capybara::VERSION > '3'
+      assert has_content? 'Author', :minimum => 1
+    else
+      assert has_content? 'Author'
+    end
     assert has_content? 'name'
     assert has_content? 'Book'
     assert has_content? 'title'
