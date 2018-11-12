@@ -21,7 +21,9 @@ class MigratorTest < ActiveSupport::TestCase
 
   sub_test_case '.run_migrations' do
     setup do
-      File.write Rails.root.join('db/migrate/20999999999999_create_foobars.rb'), 'class CreateFoobars < ActiveRecord::VERSION::MAJOR >= 5 ? ActiveRecord::Migration[5.0] : ActiveRecord::Migration; end'
+      File.open(Rails.root.join('db/migrate/20999999999999_create_foobars.rb'), 'w') do |f|
+        f.puts 'class CreateFoobars < ActiveRecord::VERSION::MAJOR >= 5 ? ActiveRecord::Migration[5.0] : ActiveRecord::Migration; end'
+      end
 
       if defined? ActiveRecord::MigrationContext  # >= 5.2
         mock.instance_of(ActiveRecord::MigrationContext).run(:up, 20999999999999)
@@ -41,7 +43,7 @@ end
 
 class GenaratorRunnerTest < ActiveSupport::TestCase
   setup do
-    stub.proxy(Time).now {|t| stub(t).utc { Time.new 2012, 5, 12, 13, 26 } }
+    stub.proxy(Time).now {|t| stub(t).utc { Time.parse '2012/5/12 13:26' } }
   end
   teardown do
     Dir.glob(Rails.root.join('db/migrate/*.rb')).each do |f|
