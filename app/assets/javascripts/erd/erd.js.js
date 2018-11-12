@@ -1,6 +1,5 @@
 /*
  * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
  * DS102: Remove unnecessary code created because of implicit returns
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
@@ -28,14 +27,14 @@ class ERD {
     this.setup_handlers();
     const models = this.elem.find('.model');
     this.models = {};
-    for (let model of Array.from(models)) {
+    for (let model of models) {
       this.models[$(model).data('model_name')] = model;
     }
     this.connect_arrows(this.edges);
   }
 
   upsert_change(action, model, column, from, to) {
-    const rows = (Array.from($('#changes > tbody > tr')).map((tr) => $(tr).find('td')));
+    const rows = ($('#changes > tbody > tr').map((tr) => $(tr).find('td')));
     let existing = null;
     $(rows).each(function(i, row) {
       if ((action === $(row[0]).html()) && (model === $(row[1]).html()) && (column === $(row[2]).html())) { return existing = row; }
@@ -58,7 +57,7 @@ class ERD {
   }
 
   positions(div) {
-    const [left, width, top, height] = Array.from([parseFloat(div.css('left')), parseFloat(div.css('width')), parseFloat(div.css('top')), parseFloat(div.css('height'))]);
+    const [left, width, top, height] = [parseFloat(div.css('left')), parseFloat(div.css('width')), parseFloat(div.css('top')), parseFloat(div.css('height'))];
     return {left, right: left + width, top, bottom: top + height, center: {x: (left + left + width) / 2, y: (top + top + height) / 2}, vertex: {}};
   }
 
@@ -85,17 +84,17 @@ class ERD {
     const y2x = y => (y - b) / a;
 
     if (from.center.x > to.center.x) {
-      [from.vertex.x, from.vertex.y] = Array.from([from.left, x2y(from.left)]);
-      [to.vertex.x, to.vertex.y] = Array.from([to.right, x2y(to.right)]);
+      [from.vertex.x, from.vertex.y] = [from.left, x2y(from.left)];
+      [to.vertex.x, to.vertex.y] = [to.right, x2y(to.right)];
     } else {
-      [from.vertex.x, from.vertex.y] = Array.from([from.right, x2y(from.right)]);
-      [to.vertex.x, to.vertex.y] = Array.from([to.left, x2y(to.left)]);
+      [from.vertex.x, from.vertex.y] = [from.right, x2y(from.right)];
+      [to.vertex.x, to.vertex.y] = [to.left, x2y(to.left)];
     }
     for (let rect of [from, to]) {
       if (rect.vertex.y < rect.top) {
-        [rect.vertex.x, rect.vertex.y, rect.vertex.direction] = Array.from([y2x(rect.top), rect.top, 'v']);
+        [rect.vertex.x, rect.vertex.y, rect.vertex.direction] = [y2x(rect.top), rect.top, 'v'];
       } else if (rect.vertex.y > rect.bottom) {
-        [rect.vertex.x, rect.vertex.y, rect.vertex.direction] = Array.from([y2x(rect.bottom), rect.bottom, 'v']);
+        [rect.vertex.x, rect.vertex.y, rect.vertex.direction] = [y2x(rect.bottom), rect.bottom, 'v'];
       } else {
         from.vertex.direction = 'h';
       }
@@ -397,7 +396,7 @@ $(function() {
         const model = $('#new_model_name').val();
         let columns = '';
         $('#create_model_table > tbody > tr').each(function(i, row) {
-          const [name, type] = Array.from((Array.from($(row).find('input')).map((v) => $(v).val())));
+          const [name, type] = $(row).find('input').map((v) => $(v).val());
           if (name) { return columns += `${name}${type ? `:${type}` : ''} `; }
         });
         window.erd.upsert_change('create_model', model, columns, '', '');
