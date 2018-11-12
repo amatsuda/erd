@@ -1,6 +1,5 @@
 /*
  * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
@@ -53,7 +52,7 @@ class ERD {
       $(existing[3]).text(from);
       $(existing[4]).text(to);
     }
-    return $('#changes').show();
+    $('#changes').show();
   }
 
   positions(div) {
@@ -62,8 +61,8 @@ class ERD {
   }
 
   connect_arrows(edges) {
-    return $.each(edges, (i, edge) => {
-      return this.connect_arrow(edge, $(this.models[edge.from]), $(this.models[edge.to]));
+    $.each(edges, (i, edge) => {
+      this.connect_arrow(edge, $(this.models[edge.from]), $(this.models[edge.to]));
     });
   }
 
@@ -106,14 +105,14 @@ class ERD {
       path = `M${Math.floor(from.vertex.x)} ${Math.floor(from.vertex.y)}V${Math.floor((from.vertex.y + to.vertex.y) / 2)} H${Math.floor(to.vertex.x)} V${Math.floor(to.vertex.y)}`;
     }
 
-    return edge.path = this.paper.path(path).attr({'stroke-width': 2, opacity: 0.5, 'arrow-end': 'classic-wide-long'});
+    edge.path = this.paper.path(path).attr({'stroke-width': 2, opacity: 0.5, 'arrow-end': 'classic-wide-long'});
   }
 
   setup_handlers() {
     this.setup_click_handlers();
     this.setup_submit_handlers();
     this.setup_migration_event_handlers();
-    return $('div.model').draggable({drag: this.handle_drag});
+    $('div.model').draggable({drag: this.handle_drag});
   }
 
   handle_drag(ev, ui) {
@@ -123,7 +122,7 @@ class ERD {
     const from = target.data('original_position');
     const to = [target.css('left').replace(/px$/, ''), target.css('top').replace(/px$/, '')].join();
     this.upsert_change('move', model_name, '', '', to);
-    return this.connect_arrows(this.edges.filter(e=> (e.from === model_name) || (e.to === model_name)));
+    this.connect_arrows(this.edges.filter(e=> (e.from === model_name) || (e.to === model_name)));
   }
 
   setup_click_handlers() {
@@ -134,7 +133,7 @@ class ERD {
     $('#new_model_add_column').on('click', this.handle_new_model_add_column_click);
     $('div.model a.cancel').on('click', this.handle_cancel_click);
     $('div#open_migration').on('click', this.handle_open_migration_click);
-    return $('div#close_migration').on('click', this.handle_close_migration_click);
+    $('div#close_migration').on('click', this.handle_close_migration_click);
   }
 
   setup_submit_handlers() {
@@ -142,16 +141,16 @@ class ERD {
     $('form.rename_column_form').on('submit', this.handle_rename_column);
     $('form.alter_column_form').on('submit', this.handle_change_column_type);
     $('form.add_column_form').on('submit', this.handle_add_column);
-    return $('#changes_form').on('submit', this.handle_save);
+    $('#changes_form').on('submit', this.handle_save);
   }
 
   setup_migration_event_handlers() {
     $('#migration_status tr input').on('click', function() {
-      return $(this).parents('tr').toggleClass('active');
+      $(this).parents('tr').toggleClass('active');
     });
-    return $('#migration_status thead td button').on('click', function(ev) {
+    $('#migration_status thead td button').on('click', function(ev) {
       ev.preventDefault();
-      return $('#migration_status').toggleClass('show_all_migrations');
+      $('#migration_status').toggleClass('show_all_migrations');
     });
   }
 
@@ -161,11 +160,11 @@ class ERD {
       $(this).find('td').each(function() {
         const name = $(this).data('name');
         const value = $(this).html();
-        return change[name] = value;
+        change[name] = value;
       });
       return change;
     }).toArray();
-    return $('#changes_form').find('input[name=changes]').val(JSON.stringify(changes));
+    $('#changes_form').find('input[name=changes]').val(JSON.stringify(changes));
   }
 
   handle_add_column(ev) {
@@ -186,7 +185,7 @@ class ERD {
 
     const li_node = $("<li/>", {class: 'column unsaved'}).append(name_span).append("&nbsp;").append(type_span);
 
-    return target.hide()
+    target.hide()
       .parent()
       .siblings('.columns')
       .find('ul').append(li_node).end()
@@ -207,7 +206,7 @@ class ERD {
       this.upsert_change('alter_column', model, column, type, to);
     }
 
-    return target.hide()
+    target.hide()
       .siblings('.column_type_text').text(to).show().addClass('unsaved')
       .parents('.column').addClass('unsaved');
   }
@@ -224,7 +223,7 @@ class ERD {
       this.upsert_change('rename_column', model, column, column, to);
     }
 
-    return target.hide()
+    target.hide()
       .siblings('.column_name_text').text(to).show()
       .parents('.column').addClass('unsaved');
   }
@@ -240,7 +239,7 @@ class ERD {
       this.upsert_change('rename_model', model, '', model, to);
     }
 
-    return target.hide()
+    target.hide()
       .siblings('.model_name_text').text(to).show().addClass('unsaved');
   }
 
@@ -254,7 +253,7 @@ class ERD {
       return false;
     }
 
-    return target.hide()
+    target.hide()
       .next('form').show()
       .find('a.cancel').show().end()
       .find('input[name=type]').val('string').end()
@@ -271,7 +270,7 @@ class ERD {
       return false;
     }
 
-    return target.hide()
+    target.hide()
       .parent('form').hide()
       .prev('a.add_column, span, div').show();
   }
@@ -287,7 +286,7 @@ class ERD {
       return false;
     }
 
-    return target.hide()
+    target.hide()
       .next('form').show()
       .find('a.cancel').show().end()
       .find('input[name=to]').val(text).focus();
@@ -312,17 +311,17 @@ class ERD {
     parent.hide();
 
     $.each(this.edges, (i, edge) => {
-      if ((edge.from === model_name) || (edge.to === model_name)) { return this.edges.splice(i, 1); }
+      if ((edge.from === model_name) || (edge.to === model_name)) { this.edges.splice(i, 1); }
     });
     this.paper.clear();
-    return this.connect_arrows(this.edges);
+    this.connect_arrows(this.edges);
   }
 
   handle_new_model_add_column_click(ev) {
     ev.preventDefault();
     const target = $(ev.currentTarget);
 
-    return target.parent().siblings('table').append('<tr><td><input type="text" /></td><td class="separator">:</td><td><input type="text" value="string" /></td></tr>').find('tr:last > td > input:first').focus();
+    target.parent().siblings('table').append('<tr><td><input type="text" /></td><td class="separator">:</td><td><input type="text" value="string" /></td></tr>').find('tr:last > td > input:first').focus();
   }
 
 
@@ -338,7 +337,7 @@ class ERD {
       return false;
     }
 
-    return target.hide()
+    target.hide()
       .next('div').show()
       .find('#close_migration').show();
   }
@@ -356,7 +355,7 @@ class ERD {
       return false;
     }
 
-    return target.hide()
+    target.hide()
       .parent().hide()
       .prev('div').show();
   }
@@ -369,19 +368,19 @@ $(function() {
   $(window).on('resize', () => $('#erd').css('height', window.innerHeight));
 
   $("#open_migration").click(function() {
-    return $('#close_migration, #open_create_model_dialog').css('right', ($('#migration').width() + ($(this).width() / 2)) - 5);
+    $('#close_migration, #open_create_model_dialog').css('right', ($('#migration').width() + ($(this).width() / 2)) - 5);
   });
 
   $("#close_migration").click(() => $('#open_create_model_dialog').css('right', 15));
 
   $('#open_up').click(function() {
     $('#migration_status .up').addClass('open');
-    return $('#migration_status .down').removeClass('open');
+    $('#migration_status .down').removeClass('open');
   });
 
   $('#open_down').click(function() {
     $('#migration_status .down').addClass('open');
-    return $('#migration_status .up').removeClass('open');
+    $('#migration_status .up').removeClass('open');
   });
 
   $('#close_all').click(() => $('#migration_status tr').removeClass('open'));
@@ -397,25 +396,25 @@ $(function() {
         let columns = '';
         $('#create_model_table > tbody > tr').each(function(i, row) {
           const [name, type] = $(row).find('input').map((v) => $(v).val());
-          if (name) { return columns += `${name}${type ? `:${type}` : ''} `; }
+          if (name) { columns += `${name}${type ? `:${type}` : ''} `; }
         });
         window.erd.upsert_change('create_model', model, columns, '', '');
         $(this).find('table > tbody > tr').each(function(i, row) {
-          if (i >= 1) { return row.remove(); }
+          if (i >= 1) { row.remove(); }
         });
         $(this).find('input').val('');
         $(this).find('input[name=new_model_column_type_1]').val('string');
 
-        return $(this).dialog('close');
+        $(this).dialog('close');
       },
       Cancel() {
-        return $(this).dialog('close');
+        $(this).dialog('close');
       }
     }
   });
 
-  return $('#open_create_model_dialog').click(function(ev) {
+  $('#open_create_model_dialog').click(function(ev) {
     ev.preventDefault();
-    return $('#create_model_form').dialog('open');
+    $('#create_model_form').dialog('open');
   });
 });
