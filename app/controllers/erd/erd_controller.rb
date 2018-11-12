@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'nokogiri'
 require 'rails_erd/diagram/graphviz'
 require 'erd/application_controller'

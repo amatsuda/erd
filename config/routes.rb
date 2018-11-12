@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Erd::Engine.routes.draw do
   get '/' => 'erd#index'
   put '/' => 'erd#update'
