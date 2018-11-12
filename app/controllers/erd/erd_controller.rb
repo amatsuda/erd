@@ -88,7 +88,7 @@ module Erd
         model_name = node_name.dup
         model_name[0] = model_name[-1] = '' if (model_name.first == '"') && (model_name.last == '"')
         model_name = model_name.sub(/^m_/, '')
-        next if model_name == 'ActiveRecord::SchemaMigration'
+        next if model_name.in? ['ActiveRecord::SchemaMigration', 'ActiveRecord::InternalMetadata']
         columns = []
         if (cols_table = label_doc.search('table')[1])
           columns = cols_table.search('tr > td').map {|col| col_name, col_type = col.text.split(' '); {:name => col_name, :type => col_type}}
