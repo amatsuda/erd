@@ -23,7 +23,6 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency 'rails', '>= 3.2'
   gem.add_development_dependency 'sass-rails'
-  gem.add_development_dependency 'jquery-rails'
   gem.add_development_dependency 'coffee-rails'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'test-unit-rails'
