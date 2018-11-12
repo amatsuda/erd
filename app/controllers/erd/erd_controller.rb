@@ -41,7 +41,7 @@ module Erd
               generated_migration_file = Erd::GenaratorRunner.execute_generate_migration "drop_#{model}"
               gsub_file generated_migration_file, /def (up|change).*  end/m, "def change\n    drop_table :#{model}\n  end"
             when 'rename_model'
-              model, from, to = from.tableize, to.tableize, model.tableize
+              _model, from, to = from.tableize, to.tableize, model.tableize
               generated_migration_file = Erd::GenaratorRunner.execute_generate_migration "rename_#{from}_to_#{to}"
               gsub_file generated_migration_file, /def (up|change).*  end/m, "def change\n    rename_table :#{from}, :#{to}\n  end"
             when 'add_column'
