@@ -25,7 +25,7 @@ $set_prefix: -webkit-, -moz-, -ms-, -o-, "";
 
 @mixin graduent($color: $white) {
   @each $prefix in $set_prefix {
-    background: #{$prefix}linear-gradient(top, $color 0%, $color - 30 88%);
+    background: #{$prefix}linear-gradient(top, $color 0%, adjust_color($color, $red: -30, $green: -30, $blue: -30) 88%);
   }
 }
 
@@ -125,7 +125,7 @@ $set_prefix: -webkit-, -moz-, -ms-, -o-, "";
     };
   }
   &:hover {
-    background: $yellow - 6;
+    background: adjust_color($yellow, $red: -6, $green: -6, $blue: -6);
   }
 }
 
@@ -372,7 +372,7 @@ li {
       @include border-radius(9px);
       padding: 3px 0 0;
       &:hover {
-        background: $black + 50;
+        background: adjust_color($black, $red: +50, $green: +50, $blue: +50);
       }
       img {
         width: 10px;
@@ -397,7 +397,7 @@ li {
       decoration: none;
     };
     &:hover {
-      background: $black - 10;
+      background: adjust_color($black, $red: -10, $green: -10, $blue: -10);
     }
   }
 }
@@ -419,7 +419,7 @@ li {
       width: 100%;
     }
     &:nth-child(even) {
-      background: $white - 6;
+      background: adjust_color($white, $red: -6, $green: -6, $blue: -6);
     }
     &:last-child {
       border-bottom: none;
@@ -487,7 +487,7 @@ li {
       padding: 8px;
     }
     &:hover {
-      background-color: $white - 20;
+      background-color: adjust_color($white, $red: -20, $green: -20, $blue: -20);
     }
   }
 }
