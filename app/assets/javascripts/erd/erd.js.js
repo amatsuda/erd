@@ -52,6 +52,11 @@ class ERD {
       $(existing[3]).text(from);
       $(existing[4]).text(to);
     }
+    $('#changes > tbody > tr').each(function(i, tr) {
+      const visible = $('#changes > tbody > tr:visible');
+      if (visible.length <= 10) { return; }
+      $(tr).hide();
+    });
     $('#changes').show();
   }
 
