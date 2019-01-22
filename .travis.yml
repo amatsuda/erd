@@ -13,6 +13,7 @@ cache:
   - bundler
 
 before_install:
+  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
   - sudo apt update -qq
   - sudo apt install -y chromium-chromedriver
   - sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/
