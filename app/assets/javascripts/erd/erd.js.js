@@ -33,7 +33,7 @@ class ERD {
   }
 
   upsert_change(action, model, column, from, to) {
-    const rows = ($('#changes > tbody > tr').map((tr) => $(tr).find('td')));
+    const rows = $('#changes > tbody > tr').toArray().map((tr) => $(tr).find('td'));
     let existing = null;
     $(rows).each(function(i, row) {
       if ((action === $(row[0]).html()) && (model === $(row[1]).html()) && (column === $(row[2]).html())) { return existing = row; }
