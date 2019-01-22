@@ -8,7 +8,7 @@ module Erd
   autoload :GenaratorRunner, 'erd/generator_runner'
 
   class Railtie < ::Rails::Railtie #:nodoc:
-    initializer 'erd' do |app|
+    initializer 'erd' do
       ActiveSupport.on_load(:after_initialize) do
         if Rails.env.development?
           Rails.application.routes.append do
