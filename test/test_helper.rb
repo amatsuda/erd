@@ -7,6 +7,8 @@ ENV['RAILS_ENV'] = 'development'
 
 # load Rails first
 require 'rails'
+require 'action_controller/railtie'
+require 'active_record/railtie'
 require 'erd'
 require 'fake_app/fake_app'
 require 'test/unit/rails/test_help'
