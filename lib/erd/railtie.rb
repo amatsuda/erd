@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails/all'
+require 'rails'
 require 'erd/engine'
 
 module Erd
