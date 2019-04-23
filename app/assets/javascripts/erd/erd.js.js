@@ -395,7 +395,7 @@ $(function() {
         const model = $('#new_model_name').val();
         let columns = '';
         $('#create_model_table > tbody > tr').each(function(i, row) {
-          const [name, type] = $(row).find('input').map((v) => $(v).val());
+          const [name, type] = $(row).find('input').map((_, v)=> $(v).val());
           if (name) { columns += `${name}${type ? `:${type}` : ''} `; }
         });
         window.erd.upsert_change('create_model', model, columns, '', '');
