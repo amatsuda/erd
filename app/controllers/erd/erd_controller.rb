@@ -7,10 +7,7 @@ require 'erd/application_controller'
 module Erd
   class ErdController < ::Erd::ApplicationController
     def index
-      Rails.application.eager_load!
-      RailsERD.options[:filename], RailsERD.options[:filetype] = Rails.root.join('tmp/erd'), 'plain'
-      RailsERD::Diagram::Graphviz.create
-      plain = Rails.root.join('tmp/erd.plain').read
+      plain = generate_plain
       positions = if (json = Rails.root.join('tmp/erd_positions.json')).exist?
         ActiveSupport::JSON.decode json.read
       else
@@ -79,6 +76,14 @@ module Erd
     end
 
     private
+
+    def generate_plain
+      Rails.application.eager_load!
+      RailsERD.options[:filename], RailsERD.options[:filetype] = Rails.root.join('tmp/erd'), 'plain'
+      RailsERD::Diagram::Graphviz.create
+      Rails.root.join('tmp/erd.plain').read
+    end
+
     def render_plain(plain, positions)
       _scale, svg_width, svg_height = plain.scan(/\Agraph ([0-9\.]+) ([0-9\.]+) ([0-9\.]+)$/).first
       # node name x y width height label style shape color fillcolor
