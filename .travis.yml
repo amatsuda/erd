@@ -6,6 +6,7 @@ addons:
   apt:
     packages:
       - graphviz
+  chrome: stable
 
 cache:
   - apt
