@@ -9,8 +9,8 @@ module Erd
 
   class Railtie < ::Rails::Railtie #:nodoc:
     initializer 'erd' do
-      ActiveSupport.on_load(:after_initialize) do
-        if Rails.env.development?
+      if Rails.env.development?
+        ActiveSupport.on_load :after_initialize do
           Rails.application.routes.prepend do
             mount Erd::Engine, :at => '/erd'
           end
