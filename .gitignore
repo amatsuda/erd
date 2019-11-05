@@ -3,6 +3,7 @@
 .bundle
 .config
 .yardoc
+.sass-cache
 Gemfile.lock
 gemfiles/*.lock
 InstalledFiles
