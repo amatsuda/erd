@@ -2,9 +2,9 @@
   <div id="erd_container">
     <%=raw @erd %>
   </div>
-  <div id="open_migration"><%= image_tag("/assets/erd/angle-left.png") %></div>
+  <div id="open_migration"><%= image_tag '/erd/angle-left.png' %></div>
   <div id="migration">
-    <div id="close_migration"><%= image_tag("/assets/erd/angle-right.png") %></div>
+    <div id="close_migration"><%= image_tag '/erd/angle-right.png' %></div>
     <%- if flash[:executed_migrations].present? -%>
       <div id="executed">
         <h2>Successfully executed following <%= flash[:executed_migrations].values.flatten.count %> migrations!</h2>

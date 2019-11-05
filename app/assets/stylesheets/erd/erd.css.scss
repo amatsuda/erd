@@ -323,7 +323,7 @@ li {
   overflow: auto;
   position: relative;
   background-color: $background-color;
-  background-image: image_url('erd/background.png');
+  background-image: image_url('/erd/background.png');
   form {
     display: none;
   }
