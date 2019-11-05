@@ -12,8 +12,6 @@ cache:
   - bundler
 
 before_install:
-  - sudo apt install -y chromium-chromedriver
-  - sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/
   - gem i bundler -v '<2'
 
 rvm:
