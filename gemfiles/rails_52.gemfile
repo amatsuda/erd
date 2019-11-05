@@ -6,3 +6,4 @@ gemspec :path => '../'
 
 gem 'rails', '~> 5.2.0'
 gem 'puma'
+gem 'sqlite3', '< 1.4'
