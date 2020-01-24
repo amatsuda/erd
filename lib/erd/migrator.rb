@@ -8,9 +8,11 @@ module Erd
   class Migrator
     class << self
       def status
-        migration_table_name = defined?(ActiveRecord::SchemaMigration) ? ActiveRecord::SchemaMigration.table_name : ActiveRecord::Migrator.schema_migrations_table_name
-        migrated_versions = ActiveRecord::Base.connection.select_values("SELECT version FROM #{migration_table_name}").map {|v| '%.3d' % v}
         migrations = []
+        migration_table_name = defined?(ActiveRecord::SchemaMigration) ? ActiveRecord::SchemaMigration.table_name : ActiveRecord::Migrator.schema_migrations_table_name
+        return migrations unless ActiveRecord::Base.connection.table_exists? migration_table_name
+
+        migrated_versions = ActiveRecord::Base.connection.select_values("SELECT version FROM #{migration_table_name}").map {|v| '%.3d' % v}
         ActiveRecord::Migrator.migrations_paths.each do |path|
           Dir.foreach(Rails.root.join(path)) do |file|
             if (version_and_name = /^(\d{3,})_(.+)\.rb$/.match(file))
