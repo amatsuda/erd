@@ -78,7 +78,11 @@ module Erd
     private
 
     def generate_plain
-      Rails.application.eager_load!
+      if Rails.try(:autoloaders).try(:zeitwerk_enabled?)
+        Zeitwerk::Loader.eager_load_all
+      else
+        Rails.application.eager_load!
+      end
       ar_descendants = ActiveRecord::Base.descendants.reject {|m| m.name.in?(%w(ActiveRecord::SchemaMigration ActiveRecord::InternalMetadata ApplicationRecord)) }
       ar_descendants.reject! {|m| !m.table_exists? }
 
