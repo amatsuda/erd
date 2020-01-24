@@ -78,7 +78,7 @@ module Erd
     private
 
     def generate_plain
-      if Rails.try(:autoloaders).try(:zeitwerk_enabled?)
+      if Rails.respond_to?(:autoloaders) && Rails.autoloaders.try(:zeitwerk_enabled?)
         Zeitwerk::Loader.eager_load_all
       else
         Rails.application.eager_load!
