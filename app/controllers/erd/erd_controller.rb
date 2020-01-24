@@ -80,6 +80,7 @@ module Erd
     def generate_plain
       Rails.application.eager_load!
       ar_descendants = ActiveRecord::Base.descendants.reject {|m| m.name.in?(%w(ActiveRecord::SchemaMigration ActiveRecord::InternalMetadata ApplicationRecord)) }
+      ar_descendants.reject! {|m| !m.table_exists? }
 
       g = GraphViz.new('ERD', :type => :digraph, :rankdir => 'TB', :splines => 'spline', :layout => 'sfdp') {|g|
         nodes = ar_descendants.each_with_object({}) do |model, hash|
