@@ -43,7 +43,7 @@ Browse at your http://localhost:3000/erd
 
 * drop column (need to think of the UI)
 
-* stop depending on rails-erd and Graphviz
+* stop depending on Graphviz
 
 * tests
 

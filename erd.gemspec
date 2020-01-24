@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ['lib']
   gem.version       = Erd::VERSION
 
-  gem.add_runtime_dependency 'rails-erd', ['>= 0.4.5']
+  gem.add_runtime_dependency 'ruby-graphviz'
   gem.add_runtime_dependency 'nokogiri'
 
   gem.add_development_dependency 'rails', '>= 3.2'

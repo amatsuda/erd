@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'nokogiri'
-require 'rails_erd/diagram/graphviz'
+require 'ruby-graphviz'
 require 'erd/application_controller'
 
 module Erd
@@ -79,32 +79,51 @@ module Erd
 
     def generate_plain
       Rails.application.eager_load!
-      RailsERD.options[:filename], RailsERD.options[:filetype] = Rails.root.join('tmp/erd'), 'plain'
-      RailsERD::Diagram::Graphviz.create
-      Rails.root.join('tmp/erd.plain').read
+      ar_descendants = ActiveRecord::Base.descendants.reject {|m| m.name.in?(%w(ActiveRecord::SchemaMigration ActiveRecord::InternalMetadata ApplicationRecord)) }
+
+      g = GraphViz.new('ERD', :type => :digraph, :rankdir => 'TB', :splines => 'spline', :layout => 'sfdp') {|g|
+        nodes = ar_descendants.each_with_object({}) do |model, hash|
+          next if model.name.start_with? 'HABTM_'
+          hash[model.name] = model.columns.reject {|c| c.name.in? %w(id created_at updated_at) }.map {|c| [c.name, c.type]}
+        end
+
+        edges = []
+        ar_descendants.each do |model|
+          model.reflect_on_all_associations.each do |reflection|
+            next unless nodes.key? model.name
+            next if reflection.macro == :belongs_to
+            next unless nodes.key?(reflection.klass.name)
+
+            edges << [model.name, reflection.klass.name]
+            # don't include the FKs in the diagram
+            nodes[reflection.klass.name].delete(reflection.foreign_key)
+          end
+        end
+
+        nodes.each_pair do |model_name, cols|
+          g.add_nodes model_name, 'shape' => 'record', 'label' => "#{model_name}|#{cols.map {|name, type| "#{name}(#{type})"}.join('\l')}"
+        end
+        edges.each do |from, to|
+          g.add_edge g.search_node(from), g.search_node(to)
+        end
+      }
+      g.output('svg' => 'e.svg')
+      g.output('plain' => String)
     end
 
     def render_plain(plain, positions)
-      _scale, svg_width, svg_height = plain.scan(/\Agraph ([0-9\.]+) ([0-9\.]+) ([0-9\.]+)$/).first
+      _scale, svg_width, svg_height = plain.scan(/\Agraph ([\d\.]+) ([\d\.]+) ([\d\.]+)$/).first
       # node name x y width height label style shape color fillcolor
       max_model_x, max_model_y = 0, 0
-      models = plain.scan(/^node ([^ ]+) ([0-9\.]+) ([0-9\.]+) ([0-9\.]+) ([0-9\.]+) <\{?(<((?!^\}?>).)*)^\}?> [^ ]+ [^ ]+ [^ ]+ [^ ]+\n/m).map {|node_name, x, y, width, height, label|
-        label_doc = Nokogiri::HTML::DocumentFragment.parse(label)
-        model_name = node_name.dup
-        model_name[0] = model_name[-1] = '' if (model_name.first == '"') && (model_name.last == '"')
-        model_name = model_name.sub(/^m_/, '')
-        next if model_name.in? ['ActiveRecord::SchemaMigration', 'ActiveRecord::InternalMetadata']
-        columns = []
-        if (cols_table = label_doc.search('table')[1])
-          columns = cols_table.search('tr > td').map {|col| col_name, col_type = col.text.split(' '); {:name => col_name, :type => col_type}}
-        end
+      models = plain.scan(/^node ([^ ]+) ([\d\.]+) ([\d\.]+) ([\d\.]+) ([\d\.]+) ([^ ]+) [^ ]+ [^ ]+ [^ ]+ [^ ]+\n/m).map {|model_name, x, y, width, height, label|
+        columns = label.gsub("\\\n", '').split('|')[1].split('\l').map {|name_and_type| name_and_type.scan(/(.*?)\((.*?)\)/).first }.map {|n, t| {:name => n, :type => t} }
         custom_x, custom_y = positions[model_name.tableize].try(:split, ',')
         h = {:model => model_name, :x => (custom_x || (BigDecimal(x) * 72).round), :y => (custom_y || (BigDecimal(y) * 72).round), :width => (BigDecimal(width) * 72).round, :height => height, :columns => columns}
         max_model_x, max_model_y = [h[:x].to_i + h[:width].to_i, max_model_x, 1024].max, [h[:y].to_i + h[:height].to_i, max_model_y, 768].max
         h
       }.compact
       # edge tail head n x1 y1 .. xn yn [label xl yl] style color
-      edges = plain.scan(/^edge ([^ ]+)+ ([^ ]+)/).map {|from, to| {:from => from.sub(/^m_/, ''), :to => to.sub(/^m_/, '')}}
+      edges = plain.scan(/^edge ([^ ]+)+ ([^ ]+)/).map {|from, to| {:from => from, :to => to}}
       render_to_string 'erd/erd/erd', :layout => nil, :locals => {:width => [(BigDecimal(svg_width) * 72).round, max_model_x].max, :height => [(BigDecimal(svg_height) * 72).round, max_model_y].max, :models => models, :edges => edges}
     end
 
