@@ -112,7 +112,6 @@ module Erd
           g.add_edge g.search_node(from), g.search_node(to)
         end
       }
-      g.output('svg' => 'e.svg')
       g.output('plain' => String)
     end
 
