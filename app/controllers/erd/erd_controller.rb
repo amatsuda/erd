@@ -19,7 +19,7 @@ module Erd
     end
 
     def update
-      changes = ActiveSupport::JSON.decode(params[:changes])
+      changes = params[:changes].present? ? ActiveSupport::JSON.decode(params[:changes]) : []
       executed_migrations, failed_migrations = [], []
       changes.each do |row|
         begin
