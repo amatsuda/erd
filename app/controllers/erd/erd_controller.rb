@@ -7,6 +7,10 @@ require 'erd/application_controller'
 module Erd
   class ErdController < ::Erd::ApplicationController
     def index
+      redirect_to :edit
+    end
+
+    def edit
       plain = generate_plain
       positions = if (json = Rails.root.join('tmp/erd_positions.json')).exist?
         ActiveSupport::JSON.decode json.read
