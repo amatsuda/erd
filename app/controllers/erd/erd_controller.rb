@@ -101,7 +101,7 @@ module Erd
 
             edges << [model.name, reflection.klass.name]
             # don't include the FKs in the diagram
-            nodes[reflection.klass.name].delete(reflection.foreign_key)
+            nodes[reflection.klass.name].delete_if {|col, _type| col == reflection.foreign_key }
           end
         end
 
