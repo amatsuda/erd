@@ -7,10 +7,6 @@ require 'erd/application_controller'
 module Erd
   class ErdController < ::Erd::ApplicationController
     def index
-      redirect_to :edit
-    end
-
-    def edit
       plain = generate_plain
       positions = if (json = Rails.root.join('tmp/erd_positions.json')).exist?
         ActiveSupport::JSON.decode json.read
@@ -22,7 +18,19 @@ module Erd
       @migrations = Erd::Migrator.status
     end
 
+    def edit
+      index
+    end
+
     def update
+      if params[:position_changes].present?
+        position_changes = ActiveSupport::JSON.decode(params[:position_changes])
+        json_file = Rails.root.join('tmp/erd_positions.json')
+        positions = json_file.exist? ? ActiveSupport::JSON.decode(json_file.read) : {}
+        positions.merge! position_changes.transform_keys(&:tableize)
+        json_file.open('w') {|f| f.write positions.to_json }
+      end
+
       changes = params[:changes].present? ? ActiveSupport::JSON.decode(params[:changes]) : []
       executed_migrations, failed_migrations = [], []
       changes.each do |row|

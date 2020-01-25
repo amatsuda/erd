@@ -19,10 +19,12 @@ class ERD {
     this.handle_new_model_add_column_click = this.handle_new_model_add_column_click.bind(this);
     this.handle_open_migration_click = this.handle_open_migration_click.bind(this);
     this.handle_close_migration_click = this.handle_close_migration_click.bind(this);
+    this.handle_save_position_changes_click = this.handle_save_position_changes_click.bind(this);
     this.name = name;
     this.elem = elem;
     this.edges = edges;
     this.paper = Raphael(this.name, this.elem.data('svg_width'), this.elem.data('svg_height'));
+    this.position_changes = {};
     this.setup_handlers();
     const models = this.elem.find('.model');
     this.models = {};
@@ -122,6 +124,7 @@ class ERD {
     const from = target.data('original_position');
     const to = [target.css('left').replace(/px$/, ''), target.css('top').replace(/px$/, '')].join();
     this.upsert_change('move', model_name, '', '', to);
+    this.position_changes[model_name] = to;
     this.connect_arrows(this.edges.filter(e=> (e.from === model_name) || (e.to === model_name)));
   }
 
@@ -134,6 +137,7 @@ class ERD {
     $('div.model a.cancel').on('click', this.handle_cancel_click);
     $('div#open_migration').on('click', this.handle_open_migration_click);
     $('div#close_migration').on('click', this.handle_close_migration_click);
+    $('#save_position_changes').on('click', this.handle_save_position_changes_click);
   }
 
   setup_submit_handlers() {
@@ -358,6 +362,11 @@ class ERD {
     target.hide()
       .parent().hide()
       .prev('div').show();
+  }
+
+  handle_save_position_changes_click(ev) {
+    $('#position_changes_form').find('input[name=position_changes]').val(JSON.stringify(this.position_changes));
+    $('#position_changes_form').submit();
   }
 }
 

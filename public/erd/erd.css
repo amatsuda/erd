@@ -510,6 +510,30 @@ li {
 #model_name_changes, #column_name_changes {
   display: none; }
 
+#save_position_changes {
+  position: fixed;
+  right: 15px;
+  top: 15px;
+  background: rgba(191, 0, 0, 0.6);
+  padding: 12px 20px;
+  color: white;
+  text-decoration: none;
+  font-size: 13px; }
+  #save_position_changes:hover {
+    background: rgba(191, 0, 0, 0.8); }
+
+#link_to_edit {
+  position: fixed;
+  right: 15px;
+  top: 70px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 12px 20px;
+  color: white;
+  text-decoration: none;
+  font-size: 13px; }
+  #link_to_edit:hover {
+    background: rgba(0, 0, 0, 0.8); }
+
 #open_create_model_dialog {
   position: fixed;
   right: 15px;
