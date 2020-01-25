@@ -86,7 +86,7 @@ module Erd
       ar_descendants = ActiveRecord::Base.descendants.reject {|m| m.name.in?(%w(ActiveRecord::SchemaMigration ActiveRecord::InternalMetadata ApplicationRecord)) }
       ar_descendants.reject! {|m| !m.table_exists? }
 
-      g = GraphViz.new('ERD', :type => :digraph, :rankdir => 'TB', :splines => 'spline', :layout => 'sfdp') {|g|
+      g = GraphViz.new('ERD', :type => :digraph, :rankdir => 'LR', :labelloc => :t, :ranksep => '1.5', :nodesep => '1.8', :margin => '0,0', :splines => 'spline') {|g|
         nodes = ar_descendants.each_with_object({}) do |model, hash|
           next if model.name.start_with? 'HABTM_'
           hash[model.name] = model.columns.reject {|c| c.name.in? %w(id created_at updated_at) }.map {|c| [c.name, c.type]}
