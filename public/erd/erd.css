@@ -229,10 +229,10 @@ li {
         background: -ms-linear-gradient(top, #eeeeee 0%, #d0d0d0 88%);
         background: -o-linear-gradient(top, #eeeeee 0%, #d0d0d0 88%);
         background: linear-gradient(top, #eeeeee 0%, #d0d0d0 88%);
-        font-size: 13px;
+        font-size: 15px;
         font-weight: bold;
         text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
-        line-height: 2.2;
+        line-height: 1.6;
         padding: 0 0.8em; }
         #erd .model .model_name .model_name_text.unsaved {
           background: #fffebe;
@@ -314,7 +314,7 @@ li {
     font-size: small;
     display: block;
     padding: 0 5px;
-    line-height: 2;
+    line-height: 1.6;
     background: #444444;
     color: white;
     text-decoration: none; }
@@ -328,9 +328,9 @@ li {
 
 .columns .column {
   border-bottom: dotted 1px #cccccc;
-  padding: 0 0.8em;
+  padding: 0 0.5em;
   clear: both;
-  line-height: 28px;
+  line-height: 20px;
   font-size: 14px; }
   .columns .column table {
     width: 100%; }
@@ -377,11 +377,11 @@ li {
   .columns .column .rename_column_form {
     padding: 8px; }
   .columns .column .column_type_text {
-    font-size: 10px;
+    font-size: 13px;
     float: right;
     display: block;
     line-height: 16px;
-    margin: 5px 0 0;
+    margin: 1px 0 0;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
