@@ -12,12 +12,14 @@ module Erd
       plain = generate_plain
       saved_positions = POSITIONS_JSON_FILE.exist? ? ActiveSupport::JSON.decode(POSITIONS_JSON_FILE.read) : {}
       @erd = render_plain plain, saved_positions
-
-      @migrations = Erd::Migrator.status
     end
 
     def edit
-      index
+      plain = generate_plain
+      saved_positions = POSITIONS_JSON_FILE.exist? ? ActiveSupport::JSON.decode(POSITIONS_JSON_FILE.read) : {}
+      @erd = render_plain plain, saved_positions
+
+      @migrations = Erd::Migrator.status
     end
 
     def update
