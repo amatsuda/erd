@@ -13,7 +13,7 @@ module Erd
     end
 
     def edit
-      @erd = render_plain generate_plain, saved_positions
+      @erd = render_plain generate_plain, saved_positions, true
       @migrations = Erd::Migrator.status
     end
 
@@ -121,7 +121,7 @@ module Erd
       g.output('plain' => String)
     end
 
-    def render_plain(plain, positions)
+    def render_plain(plain, positions, edit_mode = false)
       _scale, svg_width, svg_height = plain.scan(/\Agraph ([\d\.]+) ([\d\.]+) ([\d\.]+)$/).first
       # node name x y width height label style shape color fillcolor
       max_model_x, max_model_y = 0, 0
@@ -134,7 +134,7 @@ module Erd
       }.compact
       # edge tail head n x1 y1 .. xn yn [label xl yl] style color
       edges = plain.scan(/^edge ([^ ]+)+ ([^ ]+)/).map {|from, to| {:from => from, :to => to}}
-      render_to_string 'erd/erd/erd', :layout => nil, :locals => {:width => [(BigDecimal(svg_width) * 72).round, max_model_x].max, :height => [(BigDecimal(svg_height) * 72).round, max_model_y].max, :models => models, :edges => edges}
+      render_to_string 'erd/erd/erd', :layout => nil, :locals => {:width => [(BigDecimal(svg_width) * 72).round, max_model_x].max, :height => [(BigDecimal(svg_height) * 72).round, max_model_y].max, :models => models, :edges => edges, :edit_mode => edit_mode}
     end
 
     def gsub_file(path, flag, *args, &block)

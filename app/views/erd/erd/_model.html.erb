@@ -1,5 +1,7 @@
 <div id="erd-<%= model[:model] %>" class="model" style="top: <%= model[:y] %>px; left: <%= model[:x] %>px;" data-model_name="<%= model[:model] %>">
-  <a href="#!" class="close"><%= image_tag '/erd/close.png' %></a>
+  <% if edit_mode %>
+    <a href="#!" class="close"><%= image_tag '/erd/close.png' %></a>
+  <% end %>
   <div class="model_name">
     <div class="model_name_text"><%= model[:model] %></div>
     <form class="rename_model_form">
@@ -22,7 +24,9 @@
     </ul>
   </div>
   <div class="add_column_box">
-    <a href="#!" class="add_column">add column</a>
+    <% if edit_mode %>
+      <a href="#!" class="add_column">add column</a>
+    <% end %>
     <form class="add_column_form">
       <input name="model" type="hidden" value="<%= model[:model] %>" />
       <table>

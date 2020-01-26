@@ -1,4 +1,4 @@
 <div id="erd" data-svg_width="<%= width %>" data-svg_height="<%= height %>">
-  <%= render :partial => 'erd/erd/model', :collection => models -%>
+  <%= render :partial => 'erd/erd/model', :collection => models, :locals => {:edit_mode => edit_mode} -%>
   <script>window.raw_edges = <%= edges.to_json.html_safe %>;</script>
 </div>
