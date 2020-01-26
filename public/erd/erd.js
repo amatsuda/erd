@@ -169,6 +169,7 @@ class ERD {
       return change;
     }).toArray();
     $('#changes_form').find('input[name=changes]').val(JSON.stringify(changes));
+    $('#changes_form').find('input[name=position_changes]').val(JSON.stringify(this.position_changes));
   }
 
   handle_add_column(ev) {
@@ -365,8 +366,8 @@ class ERD {
   }
 
   handle_save_position_changes_click(ev) {
-    $('#position_changes_form').find('input[name=position_changes]').val(JSON.stringify(this.position_changes));
-    $('#position_changes_form').submit();
+    $('#changes_form').find('input[name=position_changes]').val(JSON.stringify(this.position_changes));
+    $('#changes_form').submit();
   }
 }
 

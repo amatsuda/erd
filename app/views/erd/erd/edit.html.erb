@@ -37,6 +37,7 @@
     </table>
     <%= form_tag '/erd', :method => :put, :id => 'changes_form' do %>
       <%= hidden_field_tag 'changes' %>
+      <%= hidden_field_tag 'position_changes' %>
       <%= submit_tag 'save changes' %>
     <% end %>
     <%= form_tag '/erd/migrate', :method => :put, :id => 'migrate_form' do %>

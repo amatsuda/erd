@@ -2,7 +2,7 @@
   <div id="erd_container">
     <%=raw @erd %>
   </div>
-  <%= form_tag '/erd', :method => :put, :id => 'position_changes_form' do %>
+  <%= form_tag '/erd', :method => :put, :id => 'changes_form' do %>
     <%= hidden_field_tag 'position_changes' %>
   <% end %>
   <a href="#!" id="save_position_changes">Save Position Changes</a>

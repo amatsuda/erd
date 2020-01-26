@@ -33,44 +33,40 @@ module Erd
       changes.each do |row|
         begin
           action, model, column, from, to = row['action'], row['model'], row['column'], row['from'], row['to']
-          if action == 'move'
+
+          case action
+          when 'create_model'
+            columns = column.split(' ').compact
+            generated_migration_file = Erd::GenaratorRunner.execute_generate_model model, columns
+          when 'remove_model'
             model = model.tableize
-            json_file = Rails.root.join('tmp', 'erd_positions.json')
-            positions = json_file.exist? ? ActiveSupport::JSON.decode(json_file.read) : {}
-            positions[model] = to
-            json_file.open('w') {|f| f.write positions.to_json}
+            generated_migration_file = Erd::GenaratorRunner.execute_generate_migration "drop_#{model}"
+            gsub_file generated_migration_file, /def (up|change).*  end/m, "def change\n    drop_table :#{model}\n  end"
+          when 'rename_model'
+            _model, from, to = from.tableize, to.tableize, model.tableize
+            generated_migration_file = Erd::GenaratorRunner.execute_generate_migration "rename_#{from}_to_#{to}"
+            gsub_file generated_migration_file, /def (up|change).*  end/m, "def change\n    rename_table :#{from}, :#{to}\n  end"
+          when 'add_column'
+            model = model.tableize
+            name_and_type = column.scan(/(.*)\((.*?)\)/).first
+            name, type = name_and_type[0], name_and_type[1]
+            generated_migration_file = Erd::GenaratorRunner.execute_generate_migration "add_#{name}_to_#{model}", ["#{name}:#{type}"]
+          when 'rename_column'
+            model = model.tableize
+            generated_migration_file = Erd::GenaratorRunner.execute_generate_migration "rename_#{model}_#{from}_to_#{to}"
+            gsub_file generated_migration_file, /def (up|change).*  end/m, "def change\n    rename_column :#{model}, :#{from}, :#{to}\n  end"
+          when 'alter_column'
+            model = model.tableize
+            generated_migration_file = Erd::GenaratorRunner.execute_generate_migration "change_#{model}_#{column}_type_to_#{to}"
+            gsub_file generated_migration_file, /def (up|change).*  end/m, "def change\n    change_column :#{model}, :#{column}, :#{to}\n  end"
+          when 'move'
+            # do nothing
           else
-            case action
-            when 'create_model'
-              columns = column.split(' ').compact
-              generated_migration_file = Erd::GenaratorRunner.execute_generate_model model, columns
-            when 'remove_model'
-              model = model.tableize
-              generated_migration_file = Erd::GenaratorRunner.execute_generate_migration "drop_#{model}"
-              gsub_file generated_migration_file, /def (up|change).*  end/m, "def change\n    drop_table :#{model}\n  end"
-            when 'rename_model'
-              _model, from, to = from.tableize, to.tableize, model.tableize
-              generated_migration_file = Erd::GenaratorRunner.execute_generate_migration "rename_#{from}_to_#{to}"
-              gsub_file generated_migration_file, /def (up|change).*  end/m, "def change\n    rename_table :#{from}, :#{to}\n  end"
-            when 'add_column'
-              model = model.tableize
-              name_and_type = column.scan(/(.*)\((.*?)\)/).first
-              name, type = name_and_type[0], name_and_type[1]
-              generated_migration_file = Erd::GenaratorRunner.execute_generate_migration "add_#{name}_to_#{model}", ["#{name}:#{type}"]
-            when 'rename_column'
-              model = model.tableize
-              generated_migration_file = Erd::GenaratorRunner.execute_generate_migration "rename_#{model}_#{from}_to_#{to}"
-              gsub_file generated_migration_file, /def (up|change).*  end/m, "def change\n    rename_column :#{model}, :#{from}, :#{to}\n  end"
-            when 'alter_column'
-              model = model.tableize
-              generated_migration_file = Erd::GenaratorRunner.execute_generate_migration "change_#{model}_#{column}_type_to_#{to}"
-              gsub_file generated_migration_file, /def (up|change).*  end/m, "def change\n    change_column :#{model}, :#{column}, :#{to}\n  end"
-            else
-              raise "unexpected action: #{action}"
-            end
-            Erd::Migrator.run_migrations :up => generated_migration_file
-            executed_migrations << generated_migration_file
+            raise "unexpected action: #{action}"
           end
+
+          Erd::Migrator.run_migrations :up => generated_migration_file
+          executed_migrations << generated_migration_file
         rescue ::Erd::MigrationError => e
           failed_migrations << e.message
         end
