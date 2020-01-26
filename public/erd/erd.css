@@ -219,8 +219,9 @@ li {
       box-shadow: rgba(0, 0, 0, 0.7) 0 2px 2px; }
     #erd .model .model_name {
       border-bottom: 1px #444444 solid;
-      cursor: pointer;
       margin: 1px 5px 0 5px auto; }
+    #erd .model .model_name.edit {
+      cursor: pointer; }
       #erd .model .model_name .model_name_text {
         text-align: center;
         display: block;
@@ -338,12 +339,12 @@ li {
     background: #f9f9f9; }
   .columns .column:last-child {
     border-bottom: none; }
-  .columns .column .column_name_text,
-  .columns .column .column_type_text {
+  .columns .column .column_name_text.edit,
+  .columns .column .column_type_text.edit {
     cursor: pointer; }
   .columns .column .column_name_text {
     margin: 0 1.4em 0 0; }
-    .columns .column .column_name_text:hover {
+    .columns .column .column_name_text.edit:hover {
       text-decoration: underline; }
   .columns .column.unsaved {
     background: #fffebe;
@@ -395,7 +396,7 @@ li {
     background: #f9eee9;
     color: #444444;
     border-style: solid; }
-    .columns .column .column_type_text:hover {
+    .columns .column .column_type_text.edit:hover {
       border-color: #e36c33;
       background: #edd0c2; }
     .columns .column .column_type_text.date, .columns .column .column_type_text.time, .columns .column .column_type_text.timestamp, .columns .column .column_type_text.datetime {
@@ -403,7 +404,7 @@ li {
       background: #f3e2e4;
       color: #444444;
       border-style: solid; }
-      .columns .column .column_type_text.date:hover, .columns .column .column_type_text.time:hover, .columns .column .column_type_text.timestamp:hover, .columns .column .column_type_text.datetime:hover {
+      .columns .column .column_type_text.edit.date:hover, .columns .column .column_type_text.edit.time:hover, .columns .column .column_type_text.edit.timestamp:hover, .columns .column .column_type_text.edit.datetime:hover {
         border-color: #d0394d;
         background: #e4bec3; }
     .columns .column .column_type_text.boolean {
@@ -411,7 +412,7 @@ li {
       background: #c7dce6;
       color: #444444;
       border-style: solid; }
-      .columns .column .column_type_text.boolean:hover {
+      .columns .column .column_type_text.edit.boolean:hover {
         border-color: #2e87b3;
         background: #a3c6d7; }
     .columns .column .column_type_text.text {
@@ -419,7 +420,7 @@ li {
       background: #efe7d3;
       color: #444444;
       border-style: solid; }
-      .columns .column .column_type_text.text:hover {
+      .columns .column .column_type_text.edit.text:hover {
         border-color: #cb9d2b;
         background: #e1d2ae; }
     .columns .column .column_type_text.decimal {
@@ -427,7 +428,7 @@ li {
       background: #dfdf50;
       color: #444444;
       border-style: solid; }
-      .columns .column .column_type_text.decimal:hover {
+      .columns .column .column_type_text.edit.decimal:hover {
         border-color: #5e5e05;
         background: #d5d527; }
     .columns .column .column_type_text.float {
@@ -435,7 +436,7 @@ li {
       background: silver;
       color: #444444;
       border-style: solid; }
-      .columns .column .column_type_text.float:hover {
+      .columns .column .column_type_text.edit.float:hover {
         border-color: #684b53;
         background: #a6a6a6; }
     .columns .column .column_type_text.integer {
@@ -443,7 +444,7 @@ li {
       background: #dfdfe0;
       color: #444444;
       border-style: solid; }
-      .columns .column .column_type_text.integer:hover {
+      .columns .column .column_type_text.edit.integer:hover {
         border-color: #606493;
         background: #c5c5c7; }
     .columns .column .column_type_text.primary_key {
@@ -451,7 +452,7 @@ li {
       background: #f9efe7;
       color: #444444;
       border-style: solid; }
-      .columns .column .column_type_text.primary_key:hover {
+      .columns .column .column_type_text.edit.primary_key:hover {
         border-color: #e47e30;
         background: #eed3bf; }
     .columns .column .column_type_text.string {
@@ -459,7 +460,7 @@ li {
       background: #d3e09e;
       color: #444444;
       border-style: solid; }
-      .columns .column .column_type_text.string:hover {
+      .columns .column .column_type_text.edit.string:hover {
         border-color: #7f9919;
         background: #c1d477; }
     .columns .column .column_type_text.unsaved {
