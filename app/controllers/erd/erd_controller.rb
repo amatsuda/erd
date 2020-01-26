@@ -9,23 +9,18 @@ module Erd
     POSITIONS_JSON_FILE = Rails.root.join('tmp/erd_positions.json').freeze
 
     def index
-      plain = generate_plain
-      saved_positions = POSITIONS_JSON_FILE.exist? ? ActiveSupport::JSON.decode(POSITIONS_JSON_FILE.read) : {}
-      @erd = render_plain plain, saved_positions
+      @erd = render_plain generate_plain, saved_positions
     end
 
     def edit
-      plain = generate_plain
-      saved_positions = POSITIONS_JSON_FILE.exist? ? ActiveSupport::JSON.decode(POSITIONS_JSON_FILE.read) : {}
-      @erd = render_plain plain, saved_positions
-
+      @erd = render_plain generate_plain, saved_positions
       @migrations = Erd::Migrator.status
     end
 
     def update
       if params[:position_changes].present?
         position_changes = ActiveSupport::JSON.decode(params[:position_changes])
-        positions = POSITIONS_JSON_FILE.exist? ? ActiveSupport::JSON.decode(POSITIONS_JSON_FILE.read) : {}
+        positions = saved_positions
         positions.merge! position_changes.transform_keys(&:tableize)
         POSITIONS_JSON_FILE.open('w') {|f| f.write positions.to_json }
       end
@@ -83,6 +78,10 @@ module Erd
     end
 
     private
+
+    def saved_positions
+      POSITIONS_JSON_FILE.exist? ? ActiveSupport::JSON.decode(POSITIONS_JSON_FILE.read) : {}
+    end
 
     def generate_plain
       if Rails.respond_to?(:autoloaders) && Rails.autoloaders.try(:zeitwerk_enabled?)
