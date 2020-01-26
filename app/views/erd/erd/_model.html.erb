@@ -2,7 +2,7 @@
   <% if edit_mode %>
     <a href="#!" class="close"><%= image_tag '/erd/close.png' %></a>
   <% end %>
-  <div class="model_name">
+  <div class="model_name<%= "#{' edit' if edit_mode}" %>">
     <div class="model_name_text"><%= model[:model] %></div>
     <form class="rename_model_form">
       <table>
@@ -20,7 +20,7 @@
   </div>
   <div class="columns">
     <ul>
-      <%= render :partial => 'erd/erd/column', :collection => model[:columns], :locals => {:model => model} -%>
+      <%= render :partial => 'erd/erd/column', :collection => model[:columns], :locals => {:model => model, :edit_mode => edit_mode} -%>
     </ul>
   </div>
   <div class="add_column_box">

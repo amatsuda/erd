@@ -129,7 +129,7 @@ class ERD {
   }
 
   setup_click_handlers() {
-    $('div.model_name_text, span.column_name_text, span.column_type_text').on('click', this.handle_text_elem_click);
+    $('div.model_name_text.edit, span.column_name_text.edit, span.column_type_text.edit').on('click', this.handle_text_elem_click);
     $('div.model a.add_column').on('click', this.handle_add_column_click);
     $('div.model a.cancel').on('click', this.handle_cancel_click);
     $('div.model a.close').on('click', this.handle_remove_model_click);
