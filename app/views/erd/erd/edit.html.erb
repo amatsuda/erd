@@ -58,7 +58,7 @@
         <tbody>
           <%- @migrations.each do |m| -%>
             <tr class="<%= m[:status] %>">
-              <td><label><%= check_box_tag (m[:status] == 'up' ? 'down[]' : 'up[]'), m[:filename] %><%= m[:status] %></label></td>
+              <td><label><%= check_box_tag (m[:status] == 'up' ? 'down[]' : 'up[]'), m[:filename], false, :id => "check_#{m[:filename]}" %><%= m[:status] %></label></td>
               <td><%= m[:version] %></td>
               <td class="migration_file_name"><%= m[:name] %></td>
             </tr>
