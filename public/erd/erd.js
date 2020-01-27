@@ -126,6 +126,7 @@ class ERD {
     this.upsert_change('move', model_name, '', '', to);
     this.position_changes[model_name] = to;
     this.connect_arrows(this.edges.filter(e=> (e.from === model_name) || (e.to === model_name)));
+    document.getElementById("save_position_changes").style.visibility = "visible";
   }
 
   setup_click_handlers() {

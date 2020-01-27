@@ -515,6 +515,7 @@ li {
   position: fixed;
   right: 15px;
   top: 15px;
+  visibility: hidden;
   background: rgba(191, 0, 0, 0.6);
   padding: 12px 20px;
   color: white;
