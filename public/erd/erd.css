@@ -511,30 +511,53 @@ li {
 #model_name_changes, #column_name_changes {
   display: none; }
 
-#save_position_changes {
+#drawer_switch {
+  display: none; }
+  #drawer_switch:checked ~ #buttons {
+    right: -400px; }
+  #drawer_switch:checked ~ #drawer_hide_label {
+    visibility: hidden; }
+  #drawer_switch:checked ~ #drawer_show_label {
+    visibility: visible; }
+
+#buttons {
+  position: fixed;
+  top: 70px;
+  right: 15px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s; }
+
+.drawer_switch_label {
   position: fixed;
   right: 15px;
-  top: 15px;
-  visibility: hidden;
-  background: rgba(191, 0, 0, 0.6);
+  top: 10px;
+  background: rgba(0, 0, 0, 0.6);
   padding: 12px 20px;
   color: white;
+  cursor: pointer;
   text-decoration: none;
   font-size: 13px; }
-  #save_position_changes:hover {
-    background: rgba(191, 0, 0, 0.8); }
+  .drawer_switch_label:hover {
+    background: rgba(0, 0, 0, 0.8); }
+#drawer_show_label {
+  visibility: hidden; }
 
-#link_to_edit {
-  position: fixed;
-  right: 15px;
-  top: 70px;
+.menu_button {
+  position: relative;
+  right: 0;
   background: rgba(0, 0, 0, 0.6);
   padding: 12px 20px;
   color: white;
   text-decoration: none;
   font-size: 13px; }
-  #link_to_edit:hover {
+  .menu_button:hover {
     background: rgba(0, 0, 0, 0.8); }
+#save_position_changes {
+  visibility: hidden;
+  top: 70px;
+  background: rgba(191, 0, 0, 0.6); }
+  #save_position_changes:hover {
+    background: rgba(191, 0, 0, 0.8); }
 
 #open_create_model_dialog {
   position: fixed;
