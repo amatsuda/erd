@@ -4,19 +4,21 @@
   <% end %>
   <div class="model_name<%= "#{' edit' if edit_mode}" %>">
     <div class="model_name_text"><%= model[:model] %></div>
-    <form class="rename_model_form">
-      <table>
-        <tr>
-          <td>
-            <input name="model" type="hidden" value="<%= model[:model] %>"/>
-          </td>
-          <td>
-            <input name="to" type="text" /><input type="submit" value="Change"/>
-          </td>
-        </tr>
-      </table>
-      <a href="#!" class="cancel">Cancel</a>
-    </form>
+    <% if edit_mode %>
+      <form class="rename_model_form">
+        <table>
+          <tr>
+            <td>
+              <input name="model" type="hidden" value="<%= model[:model] %>"/>
+            </td>
+            <td>
+              <input name="to" type="text" /><input type="submit" value="Change"/>
+            </td>
+          </tr>
+        </table>
+        <a href="#!" class="cancel">Cancel</a>
+      </form>
+    <% end %>
   </div>
   <div class="columns">
     <ul>
