@@ -124,17 +124,18 @@ module Erd
     def render_plain(plain, positions, edit_mode = false)
       _scale, svg_width, svg_height = plain.scan(/\Agraph ([\d\.]+) ([\d\.]+) ([\d\.]+)$/).first
       # node name x y width height label style shape color fillcolor
-      max_model_x, max_model_y = 0, 0
       models = plain.scan(/^node ([^ ]+) ([\d\.]+) ([\d\.]+) ([\d\.]+) ([\d\.]+) ([^ ]+) [^ ]+ [^ ]+ [^ ]+ [^ ]+\n/m).map {|model_name, x, y, width, height, label|
         columns = label.gsub("\\\n", '').split('|')[1].split('\l').map {|name_and_type| name_and_type.scan(/(.*?)\((.*?)\)/).first }.map {|n, t| {:name => n, :type => t} }
         custom_x, custom_y = positions[model_name.tableize].try(:split, ',')
-        h = {:model => model_name, :x => (custom_x || (BigDecimal(x) * 72).round), :y => (custom_y || (BigDecimal(y) * 72).round), :width => (BigDecimal(width) * 72).round, :height => (BigDecimal(height) * 72).round, :columns => columns}
-        max_model_x, max_model_y = [h[:x].to_i + h[:width].to_i, max_model_x, 1024].max, [h[:y].to_i + h[:height].to_i, max_model_y, 768].max
-        h
+        {:model => model_name, :x => (custom_x || (BigDecimal(x) * 72).round), :y => (custom_y || (BigDecimal(y) * 72).round), :width => (BigDecimal(width) * 72).round, :height => (BigDecimal(height) * 72).round, :columns => columns}
       }.compact
+      max_model_x = models.map {|m| m[:x].to_f + m[:width].to_f }.max
+      erd_width = [[(BigDecimal(svg_width) * 72).round, max_model_x].min, 1024].max
+      max_model_y = models.map {|m| m[:y].to_f + m[:height].to_f }.max
+      erd_height = [[(BigDecimal(svg_height) * 72).round, max_model_y].min, 768].max
       # edge tail head n x1 y1 .. xn yn [label xl yl] style color
       edges = plain.scan(/^edge ([^ ]+)+ ([^ ]+)/).map {|from, to| {:from => from, :to => to}}
-      render_to_string 'erd/erd/erd', :layout => nil, :locals => {:width => [(BigDecimal(svg_width) * 72).round, max_model_x].max, :height => [(BigDecimal(svg_height) * 72).round, max_model_y].max, :models => models, :edges => edges, :edit_mode => edit_mode}
+      render_to_string 'erd/erd/erd', :layout => nil, :locals => {:width => erd_width, :height => erd_height, :models => models, :edges => edges, :edit_mode => edit_mode}
     end
 
     def gsub_file(path, flag, *args, &block)
