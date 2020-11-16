@@ -128,7 +128,7 @@ module Erd
       models = plain.scan(/^node ([^ ]+) ([\d\.]+) ([\d\.]+) ([\d\.]+) ([\d\.]+) ([^ ]+) [^ ]+ [^ ]+ [^ ]+ [^ ]+\n/m).map {|model_name, x, y, width, height, label|
         columns = label.gsub("\\\n", '').split('|')[1].split('\l').map {|name_and_type| name_and_type.scan(/(.*?)\((.*?)\)/).first }.map {|n, t| {:name => n, :type => t} }
         custom_x, custom_y = positions[model_name.tableize].try(:split, ',')
-        h = {:model => model_name, :x => (custom_x || (BigDecimal(x) * 72).round), :y => (custom_y || (BigDecimal(y) * 72).round), :width => (BigDecimal(width) * 72).round, :height => height, :columns => columns}
+        h = {:model => model_name, :x => (custom_x || (BigDecimal(x) * 72).round), :y => (custom_y || (BigDecimal(y) * 72).round), :width => (BigDecimal(width) * 72).round, :height => (BigDecimal(height) * 72).round, :columns => columns}
         max_model_x, max_model_y = [h[:x].to_i + h[:width].to_i, max_model_x, 1024].max, [h[:y].to_i + h[:height].to_i, max_model_y, 768].max
         h
       }.compact
