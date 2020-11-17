@@ -6,7 +6,8 @@ require 'erd/application_controller'
 
 module Erd
   class ErdController < ::Erd::ApplicationController
-    POSITIONS_JSON_FILE = Rails.root.join('tmp/erd_positions.json').freeze
+    POSITIONS_JSON_FILE = Rails.root.join('db/erd_positions.json').freeze
+    OLD_POSITIONS_JSON_FILE = Rails.root.join('db/erd_positions.json').freeze  # for compatibility
 
     def index
       @erd = render_plain generate_plain, saved_positions
@@ -80,7 +81,13 @@ module Erd
     private
 
     def saved_positions
-      POSITIONS_JSON_FILE.exist? ? ActiveSupport::JSON.decode(POSITIONS_JSON_FILE.read) : {}
+      if POSITIONS_JSON_FILE.exist?
+        ActiveSupport::JSON.decode(POSITIONS_JSON_FILE.read)
+      elsif OLD_POSITIONS_JSON_FILE.exist?
+        ActiveSupport::JSON.decode(OLD_POSITIONS_JSON_FILE.read)
+      else
+        {}
+      end
     end
 
     def generate_plain
