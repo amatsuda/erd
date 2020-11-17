@@ -12,14 +12,10 @@ A Rails engine for drawing your app's ER diagram and operating migrations
 
 ## Installation
 
-Add 'erd' gem to your existing app's Gemfile:
-```
-  gem 'erd'
+Bundle 'erd' gem to your existing Rails app's Gemfile:
+```ruby
+gem 'erd', group: :development
 
-```
-Bundle it:
-```
-  % bundle
 ```
 
 
@@ -30,15 +26,21 @@ Browse at your http://localhost:3000/erd
 
 ## Features
 
-* Erd draws an ER diagram based on your app's database and models
+### Show Mode
 
-* You can drag and arrange the positions of each model
+* Erd draws an ER diagram based on your app's database and models.
 
-* You can operate DB schema manipulations such as `add column`, `rename column`, `alter column`, `create model (as well as table)`, and `drop table`
+* You can drag and arrange the positions of each model.
 
-* Then, Erd generates migration files on the server
+    * Then you can save the positions to a local file `db/erd_positions.json`, so you can share the diagram between the team members.
 
-* And you can run each migration on your browser
+### Edit Mode
+
+* You can operate DB schema manipulations such as `add column`, `rename column`, `alter column`, `create model (as well as table)`, and `drop table`.
+
+* Then, Erd generates migration files on the server.
+
+* And you can run each migration on your browser super quickly.
 
 
 ## TODO
