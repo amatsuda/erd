@@ -12,7 +12,6 @@ Gem::Specification.new do |gem|
   gem.license       = 'MIT'
 
   gem.files         = `git ls-files`.split($\)
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = 'erd'
   gem.require_paths = ['lib']
   gem.version       = Erd::VERSION
