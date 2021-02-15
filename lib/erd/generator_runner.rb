@@ -9,7 +9,7 @@ module Erd
       # @return generated migration filename
       def execute_generate_model(name, options = nil)
         result = execute_generator 'model', name, options
-        result.flatten.grep(%r(/db/migrate/.*\.rb))
+        result.flatten.grep(%r(\Adb/migrate/.*\.rb))
       end
 
       # runs `rails g migration [name]`
