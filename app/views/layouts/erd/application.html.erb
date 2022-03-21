@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8'>
-  <title>ERD - <%= Rails.application.class.parent.name %></title>
+  <title>ERD - <%= Rails.application.class.name[/[^:]+/] %></title>
   <%= stylesheet_link_tag    '/erd/erd', :media => 'all' %>
   <%= stylesheet_link_tag    'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css', :media => 'all' %>
   <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js' %>
