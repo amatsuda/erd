@@ -137,9 +137,9 @@ module Erd
         {:model => model_name, :x => (custom_x || (BigDecimal(x) * 72).round), :y => (custom_y || (BigDecimal(y) * 72).round), :width => (BigDecimal(width) * 72).round, :height => (BigDecimal(height) * 72).round, :columns => columns}
       }.compact
       max_model_x = models.map {|m| m[:x].to_f + m[:width].to_f }.max
-      erd_width = [[(BigDecimal(svg_width) * 72).round, max_model_x].min + 150, 1024].max
+      erd_width = [[(BigDecimal(svg_width) * 72).round, max_model_x].compact.min + 150, 1024].max
       max_model_y = models.map {|m| m[:y].to_f + m[:height].to_f }.max
-      erd_height = [[(BigDecimal(svg_height) * 72).round, max_model_y].min + 150, 768].max
+      erd_height = [[(BigDecimal(svg_height) * 72).round, max_model_y].compact.min + 150, 768].max
       # edge tail head n x1 y1 .. xn yn [label xl yl] style color
       edges = plain.scan(/^edge ([^ ]+)+ ([^ ]+)/).map {|from, to| {:from => from, :to => to}}
       render_to_string 'erd/erd/erd', :layout => nil, :locals => {:width => erd_width, :height => erd_height, :models => models, :edges => edges, :edit_mode => edit_mode}
