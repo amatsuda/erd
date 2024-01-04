@@ -2,7 +2,6 @@
 
 require 'nokogiri'
 require 'ruby-graphviz'
-require 'erd/application_controller'
 
 module Erd
   class ErdController < ::Erd::ApplicationController
