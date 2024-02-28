@@ -9,7 +9,7 @@ module Erd
     class << self
       def status
         migrations = []
-        migration_table_name = defined?(ActiveRecord::SchemaMigration) ? ActiveRecord::SchemaMigration.table_name : ActiveRecord::Migrator.schema_migrations_table_name
+        migration_table_name = find_schema_migration_table_name
         return migrations unless ActiveRecord::Base.connection.table_exists? migration_table_name
 
         migrated_versions = ActiveRecord::Base.connection.select_values("SELECT version FROM #{migration_table_name}").map {|v| '%.3d' % v}
@@ -48,6 +48,15 @@ module Erd
           end
         end
         #TODO unload migraion classes
+      end
+
+      private
+
+      def find_schema_migration_table_name
+        return ActiveRecord::Migrator.schema_migrations_table_name unless defined?(ActiveRecord::SchemaMigration)
+        return ActiveRecord::SchemaMigration.table_name if ActiveRecord::SchemaMigration.respond_to?(:table_name)
+
+        ActiveRecord::Base.connection.schema_migration.table_name
       end
     end
   end
